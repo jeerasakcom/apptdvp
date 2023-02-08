@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1025173197184",
+    "project_id": "tdvp-474da",
+    "storage_bucket": "tdvp-474da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025173197184:android:5ac900d6993385f8d43165",
+        "android_client_info": {
+          "package_name": "com.tdvpprinting.tdvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025173197184-n9v5r3nqoeqemhb3r5quisnsrt2drhj5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tdvpprinting.tdvp",
+            "certificate_hash": "85bebba8f7f09fa6f98e68374836b52d93a047af"
+          }
+        },
+        {
+          "client_id": "1025173197184-p75rgge25bms3auo6sl3q71cgvofba9d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDfDRdslOtdSprRztezKU8YQwvKhckBXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025173197184-p75rgge25bms3auo6sl3q71cgvofba9d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
