@@ -177,6 +177,7 @@ class _MisDetailOrderPageState extends State<MisDetailOrderPage> {
                     ),
                   ],
                 ),
+                
                 Center(
                   child: ConfigText(
                     lable: 'รายการแบบพิมพ์',

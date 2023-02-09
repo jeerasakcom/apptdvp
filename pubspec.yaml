@@ -61,8 +61,8 @@ dependencies:
   firebase_database_platform_interface: any
   
   get: ^4.6.5
-  timeline_tile: ^2.0.0
   permission_handler: ^10.2.0
+  
 
 
 

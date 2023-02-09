@@ -11,7 +11,9 @@ import 'package:tdvp/components/frontend/guest/category/all_list_category_produc
 import 'package:tdvp/components/frontend/guest/chatbot/chatbot.dart';
 import 'package:tdvp/components/frontend/guest/communication/communication.dart';
 import 'package:tdvp/components/frontend/guest/corporation/corporation.dart';
+import 'package:tdvp/components/frontend/guest/logistic/logistic.dart';
 import 'package:tdvp/components/frontend/guest/news/newspage.dart';
+import 'package:tdvp/components/frontend/guest/printing/printing.dart';
 import 'package:tdvp/states/calculate_price.dart';
 import 'package:tdvp/utility/style.dart';
 
@@ -94,8 +96,8 @@ class _HomePageState extends State<HomePage> {
     const AllCategoryProducts(),
     const AssessmentPage(),
     const CalendarPage(),
-    const HomePage(),
-    const HomePage(),
+    const PrintingPage(),
+    const LogisticPage(),
     const CommunicationPages(),
     const NewsDetailPage(),
     const ChatbotPage(),
