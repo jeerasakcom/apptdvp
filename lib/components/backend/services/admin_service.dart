@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tdvp/components/backend/admin/lists_admin.dart';
-import 'package:tdvp/components/backend/misorders/mis_orders.dart';
 import 'package:tdvp/components/backend/news/lists_news.dart';
 import 'package:tdvp/components/backend/order/mis_orders_page.dart';
 import 'package:tdvp/components/backend/products/list_products.dart';
@@ -31,7 +31,7 @@ class _AdminServiceState extends State<AdminService> {
   var user = FirebaseAuth.instance.currentUser;
   UserModel? userModel;
   bool load = true;
-  bool? haveAdmin;
+  bool? haveDataProfile;
   var userModels = <UserModel>[];
   var docIdUsers = <String>[];
 
@@ -39,50 +39,38 @@ class _AdminServiceState extends State<AdminService> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //readProfile();
-    readAdminData();
-    findUserLogin();
+    findNameAnEmail();
   }
 
-  Future<void> readProfile() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      setState(() {
-        load = false;
-        userModel = UserModel.fromMap(value.data()!);
-        print('userModel ==> ${userModel!.toMap()}');
+  Future<Null> findToken(String uid) async {
+    await Firebase.initializeApp().then((value) async {
+      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      await firebaseMessaging.getToken().then((value) async {
+        print('### uid ที่ login อยู่ ==>> $uid');
+        print('### token ==> $value');
+
+        Map<String, dynamic> data = {};
+        data['token'] = value;
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update(data)
+            .then((value) => print('Update Token Success'));
       });
     });
   }
 
-  Future<void> readAdminData() async {
-    if (userModels.isNotEmpty) {
-      userModels.clear();
-      docIdUsers.clear();
-    }
-    await FirebaseFirestore.instance
-        .collection('users')
-        .where("level", isEqualTo: "admin")
-        .get()
-        .then((value) {
-      print('value ==> ${value.docs}');
-      load = false;
-
-      if (value.docs.isEmpty) {
-        haveAdmin = false;
-      } else {
-        haveAdmin = true;
-        for (var item in value.docs) {
-          UserModel userModel = UserModel.fromMap(item.data());
-          userModels.add(userModel);
-          docIdUsers.add(item.id);
-        }
-      }
-
-      setState(() {});
+  Future<Null> findNameAnEmail() async {
+    await Firebase.initializeApp().then((value) async {
+      FirebaseAuth.instance.authStateChanges().listen((event) {
+        String uid = event!.uid;
+        findToken(uid);
+        setState(() {
+          fname = event.displayName;
+          email = event.email;
+        });
+      });
     });
   }
 
@@ -150,11 +138,7 @@ class _AdminServiceState extends State<AdminService> {
                   blockListDataAdmin(),
                   blockListProducts(),
                   blockListOrder(),
-                  // buildListTransportation(),
-                  // buildListPrinting(),
                   blockListNews(),
-                  blockListAccount(),
-                  //buildListFilePDF(),
                 ],
               ),
             ),
@@ -344,33 +328,34 @@ class _AdminServiceState extends State<AdminService> {
     );
   }
 
-  ListTile blockListAccount() {
-    return ListTile(
-      leading: IconButton(
-        icon: new Icon(
-          Icons.add_task,
-          color: Colors.black,
-        ),
-        onPressed: () {},
-      ),
-      title: const Text(
-        'รายรับ-รายจ่าย',
-        style: TextStyle(
-          fontFamily: 'THSarabunNew',
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          //color: const Color(0xFF000120),
-          color: Colors.black,
-        ),
-      ),
-      onTap: () {
-        Navigator.pop(context);
-        setState(() {
-          currentWidget = const ListsNewsPages();
-        });
-      },
-    );
-  }
+  // ListTile blockListAccount() {
+  //   return ListTile(
+  //     leading: IconButton(
+  //       icon: new Icon(
+  //         Icons.add_task,
+  //         color: Colors.black,
+  //       ),
+  //       onPressed: () {},
+  //     ),
+  //     title: const Text(
+  //       'รายรับ-รายจ่าย',
+  //       style: TextStyle(
+  //         fontFamily: 'THSarabunNew',
+  //         fontSize: 20,
+  //         fontWeight: FontWeight.bold,
+  //         //color: const Color(0xFF000120),
+  //         color: Colors.black,
+  //       ),
+  //     ),
+  //     onTap: () {
+  //       Navigator.pop(context);
+  //       setState(() {
+  //         currentWidget = const AccountingOrdersPage();
+  //         //AccountingPage();
+  //       });
+  //     },
+  //   );
+  // }
 
   ListTile buildListFilePDF() {
     return ListTile(
@@ -399,114 +384,6 @@ class _AdminServiceState extends State<AdminService> {
       },
     );
   }
-
-  UserAccountsDrawerHeader blockUserAccountsDrawerHeader() {
-    return UserAccountsDrawerHeader(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          //image: AssetImage('assets/images/img00100.jpg'),
-          //image: AssetImage('assets/images/img00100.jpg'),
-          image: AssetImage('assets/images/pro901.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      currentAccountPicture: userModel == null
-          ? Image.asset('assets/images/avatar.png')
-          : const CircleAvatar(
-              radius: 30.0,
-              //backgroundImage: NetworkImage(userModel.images),
-              /*
-              backgroundImage:
-                    NetworkImage("${snapshot.data.hitsList[index].images}"),
-                backgroundColor: Colors.transparent,
-              */
-
-              //backgroundImage: NetworkImage('images'),
-              backgroundColor: Colors.transparent,
-            ),
-      accountName: Row(
-        children: [
-          StyleProjects().topicaccount(fname == null ? 'คุณ' : fname!),
-
-          /*  const Text(
-            'คุณ',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-          Text(
-            "อีเมล ${userModel?.email}",
-            softWrap: true,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: StyleProjects().contentstyle1,
-          ),
-          */ /* const SizedBox(
-            width: 10,
-          ),
-          const Text(
-            'fname',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-         */
-        ],
-      ),
-      accountEmail: Row(
-        children: [
-          const Text(
-            'อีเมล',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          const Text(
-            'email',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-        ],
-      ),
-
-      /* accountName:
-          StyleProjects().topicaccount(fname == null ? 'คุณ' : fname!),
-      accountEmail:
-          StyleProjects().topicaccount(email == null ? 'อีเมล' : email!), */
-    );
-  }
-
-/* UserAccountsDrawerHeader blockUserAccountsDrawerHeader() {
-    return UserAccountsDrawerHeader(
-      /* decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('images/wall.jpg'), fit: BoxFit.cover),
-      ), */
-      accountName: StyleProjects().topicaccount(fname == null ? 'คุณ' : fname!),
-      accountEmail: StyleProjects().topicaccount(email == null ? 'Email' : email!),
-      currentAccountPicture: Image.asset('images/logo.png'),
-    );
-  } */
 
   Column blocklogout() {
     return Column(
@@ -596,80 +473,58 @@ class _AdminServiceState extends State<AdminService> {
     });
   }
 
-  //
-  /*
   UserAccountsDrawerHeader blockUserAccountsDrawerHeader() {
     return UserAccountsDrawerHeader(
+      // ignore: prefer_const_constructors
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/b2.jpg'),
-          fit: BoxFit.cover,
-        ),
+        image: const DecorationImage(
+            image: AssetImage('assets/images/tree.jpeg'), fit: BoxFit.cover),
       ),
-      currentAccountPicture: userModel == null
-          ? Image.asset('assets/images/avatar.png')
-          : CircleAvatar(
-              radius: 30.0,
-              backgroundImage: NetworkImage(userModel.urlAvatar),
-            ),
+      // accountName:
+      //     StyleProjects().topicaccount2(fname == null ? 'fname' : fname!),
+      accountName: Text(""),
+      accountEmail: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Text(
+                  "อีเมล",
+                  style: StyleProjects().topicstyle8,
+                ),
+              ),
+              Expanded(
+                flex: 6,
+                child: Text(
+                  email == null ? 'email' : email!,
+                  style: StyleProjects().topicstyle8,
+                ),
+              ),
+            ],
+          ),
 
-      accountName: Row(
-        children: [
-          Text(
-            'คุณ',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              //color: const Color(0xFF000120),
-              color: const Color(0xFFFFFFFF),
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            userModel == null ? 'fname' : userModel.fname,
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-              //color: const Color(0xFF000120),
-              color: const Color(0xFFFFFFFF),
-            ),
-          ),
+          // Text(
+          //   email == null ? 'email' : email!,
+          //   style: StyleProjects().topicstyle8,
+          // ),
+
+          // ConfigText(
+          //   lable: "อีเมล",
+          //   textStyle: StyleProjects().topicstyle8,
+          // ),
+          // StyleProjects().boxwidth2,
+          // ConfigText(
+          //   lable: email == null ? 'email' : email!,
+          //   textStyle: StyleProjects().topicstyle8,
+          // ),
+          //  StyleProjects().topicaccount2(email == null ? 'email' : email!),
         ],
       ),
-      accountEmail: Row(
-        children: [
-          Text(
-            'อีเมล',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              //color: const Color(0xFF000120),
-              color: const Color(0xFFFFFFFF),
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            userModel == null ? 'email' : userModel.email,
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-              //color: const Color(0xFF000120),
-              color: const Color(0xFFFFFFFF),
-            ),
-          ),
-        ],
+      currentAccountPicture: Image.asset(
+        'assets/images/iconpro.png',
       ),
     );
   }
-
-*/
-  //
 }

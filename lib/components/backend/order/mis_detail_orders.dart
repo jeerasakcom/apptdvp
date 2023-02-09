@@ -6,7 +6,6 @@ import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/config_text.dart';
 import 'package:tdvp/utility/config_text_button.dart';
 import 'package:tdvp/utility/style.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 class MisDetailOrderPage extends StatefulWidget {
   final OrderModel orderModel;
@@ -77,7 +76,7 @@ class _MisDetailOrderPageState extends State<MisDetailOrderPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: StyleProjects().primaryColor,
-        title: const Text('รายละเอียดการสั่งซื่อสินค้า'),
+        // title: const Text('รายละเอียดการสั่งซื้อสินค้า'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -118,6 +117,7 @@ class _MisDetailOrderPageState extends State<MisDetailOrderPage> {
                     ),
                   ],
                 ),
+                
                 Row(
                   children: [
                     Text(
@@ -177,7 +177,6 @@ class _MisDetailOrderPageState extends State<MisDetailOrderPage> {
                     ),
                   ],
                 ),
-                
                 Center(
                   child: ConfigText(
                     lable: 'รายการแบบพิมพ์',
@@ -423,143 +422,6 @@ class _MisDetailOrderPageState extends State<MisDetailOrderPage> {
     DateTime dateTime = timestamp.toDate();
     String string = dateFormat.format(dateTime);
     return string;
-  }
-
-  //
-  Future<void> processUpdate({required String docIdOrders}) async {
-    await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(docIdOrders)
-        .get()
-        .then((value) async {
-      OrderModel orderModel = OrderModel.fromMap(value.data()!);
-
-      print('##3feb orderModel ---> ${orderModel.toMap()}');
-
-      TextEditingController statusController = TextEditingController();
-      statusController.text = orderModel.status.toString();
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // ignore: prefer_const_constructors
-                /*
-              Text(
-                "ระดับ",
-                style: StyleProjects().topicstyle4,
-              ),
-              StyleProjects().boxwidth1,
-
-              Text(
-                userModel.level.toString(),
-                style: StyleProjects().topicstyle4,
-              ),
-              */
-                Text(
-                  orderModel.ordernumber.toString(),
-                  style: StyleProjects().topicstyle4,
-                ),
-              ],
-            ),
-          ),
-          // content: SingleChildScrollView(
-          //   child: Column(
-          //     children: [
-          //       ConfigForm2(
-          //           controller: statusController,
-          //           label: 'สถานะ',
-          //           iconData: Icons.safety_check_outlined,
-          //           changeFunc: (String string) {}),
-          //     ],
-          //   ),
-          // ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TimelineTile(
-                afterLineStyle: const LineStyle(color: Colors.yellow),
-                indicatorStyle: const IndicatorStyle(
-                  color: Colors.yellow,
-                ),
-                isFirst: true,
-                endChild: Container(
-                  padding: const EdgeInsets.only(left: 16),
-                  alignment: Alignment.centerLeft,
-                  height: 100,
-                  child: const Text('Order'),
-                ),
-              ),
-              TimelineTile(
-                beforeLineStyle: const LineStyle(color: Colors.yellow),
-                afterLineStyle: const LineStyle(color: Colors.grey),
-                indicatorStyle: const IndicatorStyle(color: Colors.yellow),
-                endChild: Container(
-                  padding: const EdgeInsets.only(left: 16),
-                  alignment: Alignment.centerLeft,
-                  height: 100,
-                  child: const Text('จัดพิมพ์'),
-                ),
-              ),
-              TimelineTile(
-                indicatorStyle: const IndicatorStyle(color: Colors.grey),
-                isLast: true,
-                endChild: Container(
-                  padding: const EdgeInsets.only(left: 16),
-                  alignment: Alignment.centerLeft,
-                  height: 100,
-                  child: Text('จัดส่ง'),
-                ),
-              )
-            ],
-          ),
-          actions: [
-            ConfigTextButton(
-              label: 'แก้ไข',
-              pressFunc: () async {
-                Navigator.pop(context);
-
-                String newstatus = 'printing';
-
-                Map<String, dynamic> map = orderModel.toMap();
-
-                map['status'] = newstatus;
-                print('##3feb map --> $map');
-
-                await FirebaseFirestore.instance
-                    .collection('orders')
-                    .doc(docIdOrders)
-                    .update(map)
-                    .then((value) {
-                  readerOrders();
-                });
-              },
-            ),
-            ConfigTextButton(
-              label: 'ยกเลิก',
-              pressFunc: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      );
-    });
-  }
-
-  Future<void> processTakeOrder({required String newstatus}) async {
-    Map<String, dynamic> map = {};
-    map['status'] = newstatus;
-    FirebaseFirestore.instance
-        .collection('orders')
-        .doc()
-        .update(map)
-        .then((value) {
-      Navigator.pop(context);
-    });
   }
 
   Future<void> processUpdateCancel({required String docIdOrders}) async {

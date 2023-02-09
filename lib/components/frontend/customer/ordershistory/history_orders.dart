@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tdvp/components/frontend/customer/orders/detail_orders.dart';
+import 'package:tdvp/components/frontend/customer/ordershistory/detail_orders.dart';
 import 'package:tdvp/models/order_model.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/config_progress.dart';

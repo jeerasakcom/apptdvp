@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tdvp/components/frontend/customer/dashboard/dashboardpage.dart';
 import 'package:tdvp/components/frontend/customer/service/customer_service.dart';
-import 'package:tdvp/components/frontend/customer/service/services.dart';
 import 'package:tdvp/models/order_model.dart';
 import 'package:tdvp/models/products_model.dart';
 import 'package:tdvp/models/sqlite_helper.dart';

@@ -22,7 +22,13 @@ class VideoState extends State<SplashPage> with SingleTickerProviderStateMixin {
   }
 
   void navigationPage() {
-    Get.to(() => const HomePage());
+    // Get.to(() => const HomePage());
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePage(),
+      ),
+    );
   }
 
   @override

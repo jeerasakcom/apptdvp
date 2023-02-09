@@ -479,7 +479,7 @@ class _RegisterPagesState extends State<RegisterPages> {
     UserModel model = UserModel(
         fname: fname,
         lname: lname,
-        level: level,
+        level: 'customer',
         address: address,
         subdistrict: subdistrict,
         district: district,
@@ -494,8 +494,13 @@ class _RegisterPagesState extends State<RegisterPages> {
     Map<String, dynamic> map = model.toMap();
 
     await FirebaseFirestore.instance.collection('users').doc(uid).set(map).then(
-        (value) => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AuthenticationPage())));
+          (value) => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AuthenticationPage(),
+            ),
+          ),
+        );
   }
 
   Container blockRegisterPages() => Container(

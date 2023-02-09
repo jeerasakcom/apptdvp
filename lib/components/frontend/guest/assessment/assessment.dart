@@ -114,150 +114,159 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                     padding: const EdgeInsets.all(10),
                                     child: Row(
                                       children: [
-                                        ElevatedButton(
+                                        Container(
+                                          width: 100,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: StyleProjects()
+                                                    .cardStream15,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                if (appController
+                                                        .chooseTypePrintModels
+                                                        .length ==
+                                                    1) {
+                                                  // Get.snackbar('รูปแบบการพิมพ์ ?',
+                                                  //     'กรุณาเลือกรูปแบบการพิมพ์ ด้วยคะ');
+                                                  ScaffoldMessenger.of(context)
+                                                      // ignore: prefer_const_constructors
+                                                      .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                        'กรุณาเลือก รูปแบบการพิมพ์ ด้วยคะ'),
+                                                  ));
+                                                } else if (appController
+                                                        .chooseQuantityPageModels
+                                                        .length ==
+                                                    1) {
+                                                  // Get.snackbar('จำนวนหน้า ?',
+                                                  //     'กรุณาเลือกจำนวนหน้า ด้วยคะ');
+                                                  ScaffoldMessenger.of(context)
+                                                      // ignore: prefer_const_constructors
+                                                      .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                        'กรุณาเลือก จำนวนหน้า ด้วยคะ'),
+                                                  ));
+                                                } else if (appController
+                                                        .chooseBindingBookModels
+                                                        .length ==
+                                                    1) {
+                                                  // Get.snackbar(
+                                                  //     'วิธีการเข้าเล่ม ?',
+                                                  //     'กรุณาเลือกวิธีการเข้าเล่ม ด้วยคะ');
+                                                  ScaffoldMessenger.of(context)
+                                                      // ignore: prefer_const_constructors
+                                                      .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                        'กรุณาเลือก วิธีการเข้าเล่ม ด้วยคะ'),
+                                                  ));
+                                                } else if (appController
+                                                        .chooseQuantityBookModels
+                                                        .length ==
+                                                    1) {
+                                                  // Get.snackbar('จำนวนเล่ม ?',
+                                                  //     'กรุณาเลือกจำนวนเล่ม ด้วยคะ');
+                                                  ScaffoldMessenger.of(context)
+                                                      // ignore: prefer_const_constructors
+                                                      .showSnackBar(SnackBar(
+                                                    content: const Text(
+                                                        'กรุณาเลือก จำนวนเล่ม ด้วยคะ'),
+                                                  ));
+                                                } else {
+                                                  double factorTypePrintDou =
+                                                      double.parse(appController
+                                                          .chooseTypePrintModels
+                                                          .last
+                                                          .factor);
+                                                  double quantityPageDou =
+                                                      double.parse(appController
+                                                          .chooseQuantityPageModels
+                                                          .last
+                                                          .quantity
+                                                          .toString());
+                                                  double factorBindingBookDou =
+                                                      double.parse(appController
+                                                          .chooseBindingBookModels
+                                                          .last
+                                                          .factor);
+                                                  double quantityBookDou =
+                                                      double.parse(appController
+                                                          .chooseQuantityBookModels
+                                                          .last
+                                                          .quantity
+                                                          .toString());
+                                                  double price =
+                                                      factorTypePrintDou *
+                                                              quantityPageDou +
+                                                          factorBindingBookDou *
+                                                              quantityBookDou;
+                                                  print('## price ---> $price');
+                                                  appController.price.value =
+                                                      price;
+                                                }
+                                              },
+                                              child: Text(
+                                                'คำนวณ',
+                                                style:
+                                                    StyleProjects().topicstyle9,
+                                              )),
+                                        ),
+                                        StyleProjects().boxwidth1,
+                                        Container(
+                                          width: 100,
+                                          child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.green,
+                                              backgroundColor:
+                                                  const Color.fromRGBO(
+                                                      245, 76, 76, 1),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(5),
                                               ),
                                             ),
-                                            onPressed: () {
-                                              if (appController
-                                                      .chooseTypePrintModels
-                                                      .length ==
-                                                  1) {
-                                                // Get.snackbar('รูปแบบการพิมพ์ ?',
-                                                //     'กรุณาเลือกรูปแบบการพิมพ์ ด้วยคะ');
-                                                ScaffoldMessenger.of(context)
-                                                    // ignore: prefer_const_constructors
-                                                    .showSnackBar(SnackBar(
-                                                  content: const Text(
-                                                      'กรุณาเลือก รูปแบบการพิมพ์ ด้วยคะ'),
-                                                ));
-                                              } else if (appController
-                                                      .chooseQuantityPageModels
-                                                      .length ==
-                                                  1) {
-                                                // Get.snackbar('จำนวนหน้า ?',
-                                                //     'กรุณาเลือกจำนวนหน้า ด้วยคะ');
-                                                ScaffoldMessenger.of(context)
-                                                    // ignore: prefer_const_constructors
-                                                    .showSnackBar(SnackBar(
-                                                  content: const Text(
-                                                      'กรุณาเลือก จำนวนหน้า ด้วยคะ'),
-                                                ));
-                                              } else if (appController
-                                                      .chooseBindingBookModels
-                                                      .length ==
-                                                  1) {
-                                                // Get.snackbar(
-                                                //     'วิธีการเข้าเล่ม ?',
-                                                //     'กรุณาเลือกวิธีการเข้าเล่ม ด้วยคะ');
-                                                ScaffoldMessenger.of(context)
-                                                    // ignore: prefer_const_constructors
-                                                    .showSnackBar(SnackBar(
-                                                  content: const Text(
-                                                      'กรุณาเลือก วิธีการเข้าเล่ม ด้วยคะ'),
-                                                ));
-                                              } else if (appController
-                                                      .chooseQuantityBookModels
-                                                      .length ==
-                                                  1) {
-                                                // Get.snackbar('จำนวนเล่ม ?',
-                                                //     'กรุณาเลือกจำนวนเล่ม ด้วยคะ');
-                                                ScaffoldMessenger.of(context)
-                                                    // ignore: prefer_const_constructors
-                                                    .showSnackBar(SnackBar(
-                                                  content: const Text(
-                                                      'กรุณาเลือก จำนวนเล่ม ด้วยคะ'),
-                                                ));
-                                              } else {
-                                                double factorTypePrintDou =
-                                                    double.parse(appController
-                                                        .chooseTypePrintModels
-                                                        .last
-                                                        .factor);
-                                                double quantityPageDou =
-                                                    double.parse(appController
-                                                        .chooseQuantityPageModels
-                                                        .last
-                                                        .quantity
-                                                        .toString());
-                                                double factorBindingBookDou =
-                                                    double.parse(appController
-                                                        .chooseBindingBookModels
-                                                        .last
-                                                        .factor);
-                                                double quantityBookDou =
-                                                    double.parse(appController
-                                                        .chooseQuantityBookModels
-                                                        .last
-                                                        .quantity
-                                                        .toString());
-                                                double price =
-                                                    factorTypePrintDou *
-                                                            quantityPageDou +
-                                                        factorBindingBookDou *
-                                                            quantityBookDou;
-                                                print('## price ---> $price');
-                                                appController.price.value =
-                                                    price;
-                                              }
+                                            onPressed: () async {
+                                              SharedPreferences preferences =
+                                                  await SharedPreferences
+                                                      .getInstance();
+
+                                              appController
+                                                  .chooseTypePrintModels
+                                                  .clear();
+                                              appController
+                                                  .chooseTypePrintModels
+                                                  .add(null);
+
+                                              appController
+                                                  .chooseQuantityPageModels
+                                                  .clear();
+                                              appController
+                                                  .chooseQuantityPageModels
+                                                  .add(null);
+
+                                              appController
+                                                  .chooseBindingBookModels
+                                                  .clear();
+                                              appController
+                                                  .chooseBindingBookModels
+                                                  .add(null);
+
+                                              appController
+                                                  .chooseQuantityBookModels
+                                                  .clear();
+                                              appController
+                                                  .chooseQuantityBookModels
+                                                  .add(null);
+
+                                              appController.price.value = 0.0;
                                             },
                                             child: Text(
-                                              'คำนวณ',
+                                              'แก้ไข',
                                               style:
-                                                  StyleProjects().contentstyle1,
-                                            )),
-                                        StyleProjects().boxwidth1,
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromRGBO(
-                                                    245, 76, 76, 1),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
+                                                  StyleProjects().topicstyle9,
                                             ),
-                                          ),
-                                          onPressed: () async {
-                                            SharedPreferences preferences =
-                                                await SharedPreferences
-                                                    .getInstance();
-
-                                            appController.chooseTypePrintModels
-                                                .clear();
-                                            appController.chooseTypePrintModels
-                                                .add(null);
-
-                                            appController
-                                                .chooseQuantityPageModels
-                                                .clear();
-                                            appController
-                                                .chooseQuantityPageModels
-                                                .add(null);
-
-                                            appController
-                                                .chooseBindingBookModels
-                                                .clear();
-                                            appController
-                                                .chooseBindingBookModels
-                                                .add(null);
-
-                                            appController
-                                                .chooseQuantityBookModels
-                                                .clear();
-                                            appController
-                                                .chooseQuantityBookModels
-                                                .add(null);
-
-                                            appController.price.value = 0.0;
-                                          },
-                                          child: Text(
-                                            'แก้ไข',
-                                            style:
-                                                StyleProjects().contentstyle1,
                                           ),
                                         ),
                                       ],

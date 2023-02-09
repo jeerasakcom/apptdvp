@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tdvp/components/frontend/customer/assessment/result_assessment.dart';
 import 'package:tdvp/components/frontend/customer/dashboard/dashboardpage.dart';
-import 'package:tdvp/components/frontend/customer/orders/history_orders.dart';
+import 'package:tdvp/components/frontend/customer/ordershistory/history_orders.dart';
 import 'package:tdvp/components/frontend/customer/profile/customer_dataprofile.dart';
 import 'package:tdvp/components/frontend/guest/authentication/authentication.dart';
-import 'package:tdvp/components/frontend/products/lists_category.dart';
+import 'package:tdvp/components/frontend/customer/processbuy/lists_category.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/states/display_price_save.dart';
 import 'package:tdvp/utility/app_dialog.dart';
+import 'package:tdvp/utility/config_avatar.dart';
+import 'package:tdvp/utility/config_image.dart';
 import 'package:tdvp/utility/config_text.dart';
 import 'package:tdvp/utility/style.dart';
 
@@ -27,63 +29,48 @@ class CustomerService extends StatefulWidget {
 
 class _CustomerServiceState extends State<CustomerService> {
   UserModel? userModel;
-  Widget currentWidget = DashboardPage();
+
+  Widget currentWidget = const DashboardPage(
+    uid: '',
+  );
+
   String? fname;
   String? email;
+  var user = FirebaseAuth.instance.currentUser;
+  bool load = true;
 
   @override
   void initState() {
     super.initState();
     findNameAnEmail();
-    findUserLogin();
   }
 
   Future<Null> findToken(String uid) async {
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    await firebaseMessaging.getToken().then((value) async {
-      print('### uid ที่ login อยู่ ==>> $uid');
-      print('##3feb token ==> $value');
+    await Firebase.initializeApp().then((value) async {
+      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      await firebaseMessaging.getToken().then((value) async {
+        print('### uid ที่ login อยู่ ==>> $uid');
+        print('### token ==> $value');
 
-      Map<String, dynamic> data = Map();
-      //Map<String, dynamic> data = {};
-      data['token'] = value;
+        Map<String, dynamic> data = {};
+        data['token'] = value;
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .update(data)
-          .then((value) => print('Update Token Success'));
-    });
-
-    NotificationSettings notificationSettings =
-        await firebaseMessaging.requestPermission();
-    print('##3feb setting ===> ${notificationSettings.authorizationStatus}');
-
-    // open App
-    FirebaseMessaging.onMessage.listen((event) {
-      String? title = event.notification!.title;
-      String? body = event.notification!.body;
-      print('##3feb onMessage เปิดแอพอยู่ ---> $title, $body');
-      AppDialog(context: context).normalDialog(title: title!, message: body!);
-    });
-
-    // Close App
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      String? title = event.notification!.title;
-      String? body = event.notification!.body;
-
-      print('##3feb onMessage ปิดแอพอยู่ ---> $title, $body');
-      AppDialog(context: context).normalDialog(title: title!, message: body!);
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update(data)
+            .then((value) => print('Update Token Success'));
+      });
     });
   }
 
   Future<Null> findNameAnEmail() async {
     await Firebase.initializeApp().then((value) async {
-      await FirebaseAuth.instance.authStateChanges().listen((event) {
+      FirebaseAuth.instance.authStateChanges().listen((event) {
         String uid = event!.uid;
         findToken(uid);
         setState(() {
-          //fname = event.displayName;
+          fname = event.displayName;
           email = event.email;
         });
       });
@@ -116,46 +103,6 @@ class _CustomerServiceState extends State<CustomerService> {
                   ),
                 );
               },
-
-              // onPressed: () async {
-              //   showDialog(
-              //     context: context,
-              //     builder: (BuildContext context) => AlertDialog(
-              //       title: ConfigText(
-              //         lable: 'Exit',
-              //         textStyle: StyleProjects().alertstyle1,
-              //       ),
-              //       content: ConfigText(
-              //         lable: 'คุณต้องการออกจากระบบ ?',
-              //         textStyle: StyleProjects().alertstyle2,
-              //       ),
-              //       actions: [
-              //         TextButton(
-              //           onPressed: () async {
-              //             await FirebaseAuth.instance.signOut().then((value) {
-              //               Get.offAll(const AuthenticationPage());
-              //             });
-              //           },
-              //           child: Text(
-              //             'ใช่',
-              //             style: StyleProjects().alertstyle2,
-              //           ),
-              //         ),
-              //         TextButton(
-              //           //onPressed: () => Navigator.pop(context),
-              //           onPressed: () {
-              //             Get.to(const CustomerService());
-              //           },
-              //           child: Text(
-              //             'ไม่',
-              //             style: StyleProjects().alertstyle2,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   );
-
-              // },
               icon: Icon(Icons.exit_to_app)),
         ],
       ),
@@ -169,7 +116,7 @@ class _CustomerServiceState extends State<CustomerService> {
                   blockProfile(),
                   blockOrders(),
                   blockHistory(),
-                  showSavePrice(),
+                  //showSavePrice(),
                 ],
               ),
             ),
@@ -191,7 +138,7 @@ class _CustomerServiceState extends State<CustomerService> {
         },
       ),
       title: Text(
-        'แก้ไขข้อมูลส่วนตัว',
+        'ข้อมูลส่วนบุคคล',
         style: StyleProjects().topicstyle9,
       ),
       onTap: () {
@@ -264,16 +211,6 @@ class _CustomerServiceState extends State<CustomerService> {
     return ListTile(
       leading: IconButton(
         icon: new Icon(Icons.description_outlined, color: Colors.black),
-        // onPressed: () async {
-        //   // Get.back();
-        //   // Get.to(const HistoryOrdersPages());
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => const HistoryOrdersPages(),
-        //     ),
-        //   );
-        // },
         onPressed: () {},
       ),
       title: Text(
@@ -293,87 +230,6 @@ class _CustomerServiceState extends State<CustomerService> {
     );
   }
 
-  /*  UserAccountsDrawerHeader buildUserAccountsDrawerHeader() {
-    return UserAccountsDrawerHeader(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/pro901.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      currentAccountPicture: userModel == null
-          ? Image.asset('assets/images/avatar.png')
-          : const CircleAvatar(
-              radius: 30.0,
-
-              //backgroundImage: NetworkImage(userModel.images),
-              /*
-              backgroundImage:
-                    NetworkImage("${snapshot.data.hitsList[index].images}"),
-                backgroundColor: Colors.transparent,
-              */
-
-              //backgroundImage: NetworkImage('images'),
-              backgroundColor: Colors.transparent,
-            ),
-      accountName: Row(
-        children: [
-          const Text(
-            'คุณ',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          const Text(
-            'fname',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-        ],
-      ),
-      accountEmail: Row(
-        children: [
-          const Text(
-            'อีเมล',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          const Text(
-            'email',
-            style: TextStyle(
-              fontFamily: 'THSarabunNew',
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-              //color: const Color(0xFF000120),
-              color: Color(0xFFFFFFFF),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  */
   Column blocklogout() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -411,79 +267,58 @@ class _CustomerServiceState extends State<CustomerService> {
     );
   }
 
-  Future<Null> findUserLogin() async {
-    await Firebase.initializeApp().then((value) async {
-      await FirebaseAuth.instance.authStateChanges().listen((event) async {
-        String uid = event!.uid;
-        print('uid ===>> $uid');
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .snapshots()
-            .listen((event) {
-          setState(() {});
-        });
-      });
-    });
-  }
-
-  //
   UserAccountsDrawerHeader buildUserAccountsDrawerHeader() {
     return UserAccountsDrawerHeader(
       // ignore: prefer_const_constructors
       decoration: BoxDecoration(
         image: const DecorationImage(
-            image: AssetImage('assets/images/pro901.jpg'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/tree.jpeg'), fit: BoxFit.cover),
       ),
-
-      /*   currentAccountPicture: userModel == null
-          ? Image.asset('assets/images/avatar.png')
-          : const CircleAvatar(
-              radius: 30.0,
-
-              //backgroundImage: NetworkImage(userModel.images),
-              
-/*               backgroundImage:
-                    NetworkImage("${snapshot.data.hitsList[index].images}"),
-                backgroundColor: Colors.transparent, */
-              
-
-              /* backgroundImage: NetworkImage('images'),
-              backgroundColor: Colors.transparent, */
-            ), */
-
-      // accountName: Row(
-      //   children: [
-      //      ConfigText(
-      //       lable: 'คุณ',
-      //       textStyle: StyleProjects().contentstyle1,
-      //     ),
-      //     StyleProjects().boxwidth1,
-      //     StyleProjects().topicaccount(fname == null ? 'fname' : fname!),
-      //   ],
-      // ),
-
-      accountName: Text('data'),
-
-      accountEmail: Row(
+      // accountName:
+      //     StyleProjects().topicaccount2(fname == null ? 'fname' : fname!),
+      accountName: Text(""),
+      accountEmail: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ConfigText(
-            lable: 'อีเมล',
-            textStyle: StyleProjects().contentstyle7,
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Text(
+                  "อีเมล",
+                  style: StyleProjects().topicstyle8,
+                ),
+              ),
+              Expanded(
+                flex: 6,
+                child: Text(
+                  email == null ? 'email' : email!,
+                  style: StyleProjects().topicstyle8,
+                ),
+              ),
+            ],
           ),
-          StyleProjects().boxwidth2,
-          StyleProjects().topicaccount2(email == null ? 'email' : email!),
-          /*  Text(
-            "อีเมล : ${userModels[index].email}",
-            softWrap: true,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: StyleProjects().contentstyle5,
-          ), */
+
+          // Text(
+          //   email == null ? 'email' : email!,
+          //   style: StyleProjects().topicstyle8,
+          // ),
+
+          // ConfigText(
+          //   lable: "อีเมล",
+          //   textStyle: StyleProjects().topicstyle8,
+          // ),
+          // StyleProjects().boxwidth2,
+          // ConfigText(
+          //   lable: email == null ? 'email' : email!,
+          //   textStyle: StyleProjects().topicstyle8,
+          // ),
+          //  StyleProjects().topicaccount2(email == null ? 'email' : email!),
         ],
+      ),
+      currentAccountPicture: Image.asset(
+        'assets/images/iconpro.png',
       ),
     );
   }
-
-  //
 }

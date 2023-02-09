@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:tdvp/components/frontend/products/show_add_cart.dart';
-import 'package:tdvp/components/frontend/products/show_list_product_where_cat.dart';
+import 'package:tdvp/components/frontend/customer/processbuy/show_add_cart.dart';
+import 'package:tdvp/components/frontend/customer/processbuy/show_list_product_where_cat.dart';
 import 'package:tdvp/models/stock_model.dart';
 import 'package:tdvp/utility/config_progress.dart';
 import 'package:tdvp/utility/config_text.dart';

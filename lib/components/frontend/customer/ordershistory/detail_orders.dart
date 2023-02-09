@@ -193,7 +193,7 @@ class _DetailOrderBuyerState extends State<DetailOrderBuyer> {
                           child: Row(
                             children: [
                               Container(
-                                //width: 130,
+                                width: 100,
                                 child: Text(
                                   orderModel!.productslists[index]
                                       ['productname'],

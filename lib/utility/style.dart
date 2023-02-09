@@ -35,7 +35,7 @@ class StyleProjects {
   Color cardStream12 = const Color(0xff00ced1);
   Color cardStream13 = const Color(0xffb4eeb4);
   Color cardStream14 = const Color(0xffffce54);
-  Color cardStream15 = const Color(0xffb4eeb4);
+  Color cardStream15 = const Color.fromARGB(255, 63, 203, 63);
 
   // Route
   static String routeHome = '/home';
@@ -293,7 +293,7 @@ class StyleProjects {
         string,
         style: const TextStyle(
             fontFamily: 'THSarabunNew',
-            color: Color(0xffa5ecd9),
+            color: Color(0xff000000),
             fontWeight: FontWeight.bold,
             fontSize: 20),
       );

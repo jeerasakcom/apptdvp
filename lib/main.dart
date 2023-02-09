@@ -8,32 +8,32 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tdvp/components/backend/admin/create_admin.dart';
-import 'package:tdvp/components/backend/services/services.dart';
-import 'package:tdvp/components/frontend/customer/service/services.dart';
+import 'package:tdvp/components/backend/services/admin_service.dart';
+import 'package:tdvp/components/frontend/customer/service/customer_service.dart';
 import 'package:tdvp/components/frontend/guest/home/homepage.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/splashpage.dart';
 import 'package:tdvp/utility/style.dart';
 
-// var getPages = <GetPage<dynamic>>[
-//   GetPage(
-//     name: '/splash',
-//     page: () => SplashPage(),
-//   ),
-//   GetPage(
-//     name: '/customer',
-//     page: () => CustomerService(),
-//   ),
-//   GetPage(
-//     name: '/admin',
-//     page: () => AdminService(),
-//   ),
-// ];
-// String firstPage = '/splash';
+var getPages = <GetPage<dynamic>>[
+  GetPage(
+    name: '/splash',
+    page: () => const SplashPage(),
+  ),
+  GetPage(
+    name: '/customer',
+    page: () => const CustomerService(),
+  ),
+  GetPage(
+    name: '/admin',
+    page: () => AdminService(),
+  ),
+];
+String firstPage = '/splash';
 
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
-// HttpOverrides.global = MyHttpOverride();
+//   HttpOverrides.global = MyHttpOverride();
 //   await Firebase.initializeApp().then((value) async {
 //     print('## initial OK #################');
 //     FirebaseAuth.instance.authStateChanges().listen((event) async {
@@ -59,10 +59,10 @@ import 'package:tdvp/utility/style.dart';
 //         runApp(MyApp());
 //       }
 //     });
-//   }); 
+//   });
 // }
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverride();
   await Firebase.initializeApp();
@@ -85,10 +85,10 @@ class MyApp extends StatelessWidget {
           primaryColor: StyleProjects().primaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           scaffoldBackgroundColor: Colors.white),
-      // home: const SplashPage(),
+      home: const SplashPage(),
 
-      home: // AddAdminPage(),
-          const HomePage(),
+      // home: // AddAdminPage(),
+      //     const HomePage(),
     );
   }
 }

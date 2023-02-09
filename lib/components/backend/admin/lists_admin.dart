@@ -244,37 +244,38 @@ class _ListsAdminPagesState extends State<ListsAdminPages> {
                                         });
                                   },
                                 ),
-                                IconButton(
-                                    onPressed: () {
-                                      StyleDialog(context: context)
-                                          .actionDialog(
-                                              title: 'ยืนยันการลบ',
-                                              message:
-                                                  'คุณต้องการลบ admin นี้ ?',
-                                              label1: 'ลบ',
-                                              label2: 'ยกเลิก',
-                                              presFunc1: () async {
-                                                print(
-                                                    '==> ${docIdUsers[index]}');
 
-                                                await FirebaseFirestore.instance
-                                                    .collection('users')
-                                                    .doc(docIdUsers[index])
-                                                    .delete()
-                                                    .then((value) {
-                                                  readAdminData();
-                                                });
+                                // IconButton(
+                                //     onPressed: () {
+                                //       StyleDialog(context: context)
+                                //           .actionDialog(
+                                //               title: 'ยืนยันการลบ',
+                                //               message:
+                                //                   'คุณต้องการลบ admin นี้ ?',
+                                //               label1: 'ลบ',
+                                //               label2: 'ยกเลิก',
+                                //               presFunc1: () async {
+                                //                 print(
+                                //                     '==> ${docIdUsers[index]}');
 
-                                                Navigator.pop(context);
-                                              },
-                                              presFunc2: () {
-                                                Navigator.pop(context);
-                                              });
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Color.fromARGB(255, 219, 49, 49),
-                                    )),
+                                //                 await FirebaseFirestore.instance
+                                //                     .collection('users')
+                                //                     .doc(docIdUsers[index])
+                                //                     .delete()
+                                //                     .then((value) {
+                                //                   readAdminData();
+                                //                 });
+
+                                //                 Navigator.pop(context);
+                                //               },
+                                //               presFunc2: () {
+                                //                 Navigator.pop(context);
+                                //               });
+                                //     },
+                                //     icon: const Icon(
+                                //       Icons.delete,
+                                //       color: Color.fromARGB(255, 219, 49, 49),
+                                //     )),
                               ],
                             ),
                           ],

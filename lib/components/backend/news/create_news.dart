@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tdvp/components/backend/news/lists_news.dart';
-import 'package:tdvp/components/frontend/customer/service/services.dart';
 import 'package:tdvp/models/news_model.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/dailog.dart';

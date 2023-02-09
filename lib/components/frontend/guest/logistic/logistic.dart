@@ -44,7 +44,7 @@ class _LogisticPageState extends State<LogisticPage> {
     await Firebase.initializeApp().then((value) async {
       await FirebaseFirestore.instance
           .collection('orders')
-          .orderBy('ordernumber', descending: false)
+          .orderBy('ordernumber', descending: true)
           .snapshots()
           .listen((event) {
         for (var item in event.docs) {
