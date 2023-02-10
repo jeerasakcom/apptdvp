@@ -9,12 +9,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tdvp/components/frontend/guest/authentication/authentication.dart';
 import 'package:tdvp/models/users_model.dart';
-import 'package:tdvp/utility/config_title.dart';
 import 'package:tdvp/utility/dailog.dart';
 import 'package:tdvp/utility/style.dart';
 
 class RegisterPages extends StatefulWidget {
+  const RegisterPages({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _RegisterPagesState createState() => _RegisterPagesState();
 }
 
@@ -42,11 +44,17 @@ class _RegisterPagesState extends State<RegisterPages> {
     findToken();
   }
 
+  // Future<void> findToken() async {
+  //   await FirebaseMessaging.instance.getToken().then((value) {
+  //     token = value;
+  //     print('token = $token');
+  //   });
+  // }
+
   Future<void> findToken() async {
-    await FirebaseMessaging.instance.getToken().then((value) {
-      token = value;
-      print('token = $token');
-    });
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    token = await firebaseMessaging.getToken();
+    print('token ==> $token');
   }
 
   @override

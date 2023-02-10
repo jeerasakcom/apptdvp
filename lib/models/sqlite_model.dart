@@ -8,7 +8,6 @@ class SQLiteModel {
   final String sum;
   final String docProduct;
   final String docStock;
-  //final String docUser;
   SQLiteModel({
     this.id,
     required this.productname,
@@ -17,7 +16,6 @@ class SQLiteModel {
     required this.sum,
     required this.docProduct,
     required this.docStock,
-    //required this.docUser,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,7 +27,6 @@ class SQLiteModel {
       'sum': sum,
       'docProduct': docProduct,
       'docStock': docStock,
-      //'docUser': docUser,
     };
   }
 
@@ -42,7 +39,6 @@ class SQLiteModel {
       sum: (map['sum'] ?? '') as String,
       docProduct: (map['docProduct'] ?? '') as String,
       docStock: (map['docStock'] ?? '') as String,
-    //  docUser: (map['docUser'] ?? '') as String,
     );
   }
 

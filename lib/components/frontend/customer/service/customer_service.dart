@@ -9,11 +9,10 @@ import 'package:tdvp/components/frontend/customer/assessment/result_assessment.d
 import 'package:tdvp/components/frontend/customer/dashboard/dashboardpage.dart';
 import 'package:tdvp/components/frontend/customer/ordershistory/history_orders.dart';
 import 'package:tdvp/components/frontend/customer/profile/customer_dataprofile.dart';
+import 'package:tdvp/components/frontend/guest/assessment/assessment.dart';
 import 'package:tdvp/components/frontend/guest/authentication/authentication.dart';
 import 'package:tdvp/components/frontend/customer/processbuy/lists_category.dart';
 import 'package:tdvp/models/users_model.dart';
-import 'package:tdvp/states/display_price_save.dart';
-import 'package:tdvp/utility/app_dialog.dart';
 import 'package:tdvp/utility/config_avatar.dart';
 import 'package:tdvp/utility/config_image.dart';
 import 'package:tdvp/utility/config_text.dart';
@@ -87,15 +86,6 @@ class _CustomerServiceState extends State<CustomerService> {
           // const ConfigLogout(),
           IconButton(
               onPressed: () async {
-                // await FirebaseAuth.instance.signOut().then((value) {
-                //   //Get.offAll(const AuthenticationPage());
-                //   Navigator.pop(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const AuthenticationPage(),
-                //     ),
-                //   );
-                // });
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -116,6 +106,7 @@ class _CustomerServiceState extends State<CustomerService> {
                   blockProfile(),
                   blockOrders(),
                   blockHistory(),
+                  blockAssessment(),
                   //showSavePrice(),
                 ],
               ),
@@ -132,24 +123,51 @@ class _CustomerServiceState extends State<CustomerService> {
     return ListTile(
       leading: IconButton(
         icon: new Icon(Icons.assignment_ind, color: Colors.black),
-        onPressed: () async {
-          // Get.back();
-          // Get.to(const CustomerReaderProfilePage());
-        },
+        onPressed: () {},
       ),
       title: Text(
         'ข้อมูลส่วนบุคคล',
         style: StyleProjects().topicstyle9,
       ),
       onTap: () {
-        // Get.back();
-        // Get.to(const CustomerReaderProfilePage());
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const CustomerReaderProfilePage(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const CustomerReaderProfilePage(),
+        //   ),
+        // );
+        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const CustomerReaderProfilePage(),
+        ));
+      },
+    );
+  }
+
+  ListTile blockAssessment() {
+    return ListTile(
+      leading: IconButton(
+        icon: new Icon(Icons.money_off_sharp, color: Colors.black),
+        onPressed: () async {},
+      ),
+      title: Text(
+        'รายการประเมินก่อนการพิมพ์',
+        style: StyleProjects().topicstyle9,
+      ),
+      onTap: () {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const AssessmentPage(),
+        //   ),
+        // );
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(
+        //   builder: (context) => const AssessmentPage(),
+        // ));
+        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const AssessmentPage(),
+        ));
       },
     );
   }
@@ -158,10 +176,6 @@ class _CustomerServiceState extends State<CustomerService> {
     return ListTile(
       leading: IconButton(
         icon: new Icon(Icons.save, color: Colors.black),
-        // onPressed: () async {
-        //   Get.back();
-        //   Get.to(const DisplayPriceSave());
-        // },
         onPressed: () {},
       ),
       title: Text(
@@ -169,14 +183,10 @@ class _CustomerServiceState extends State<CustomerService> {
         style: StyleProjects().topicstyle9,
       ),
       onTap: () {
-        // Get.back();
-        // Get.to(const DisplayPriceSave());
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ResultAssessmentPage(),
-          ),
-        );
+        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ResultAssessmentPage(),
+        ));
       },
     );
   }
@@ -197,12 +207,17 @@ class _CustomerServiceState extends State<CustomerService> {
         // Get.to(
         //   const ListCategoryPage(),
         // );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ListCategoryPage(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const ListCategoryPage(),
+        //   ),
+        // );
+
+        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ListCategoryPage(),
+        ));
       },
     );
   }
@@ -220,12 +235,16 @@ class _CustomerServiceState extends State<CustomerService> {
       onTap: () {
         // Get.back();
         // Get.to(const HistoryOrdersPages());
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HistoryOrdersPages(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const HistoryOrdersPages(),
+        //   ),
+        // );
+        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const HistoryOrdersPages(),
+        ));
       },
     );
   }
@@ -238,9 +257,6 @@ class _CustomerServiceState extends State<CustomerService> {
           decoration: BoxDecoration(color: Colors.red.shade700),
           child: ListTile(
             onTap: () async {
-              // await FirebaseAuth.instance.signOut().then((value) {
-              //   Get.offAll(const AuthenticationPage());
-              // });
               Navigator.push(
                 context,
                 MaterialPageRoute(

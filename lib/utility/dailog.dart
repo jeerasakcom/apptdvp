@@ -31,12 +31,44 @@ Future<Null> normalDialog(BuildContext context, String string) async {
               // ignore: prefer_const_constructors
               child: Text(
                 'ตกลง',
-                // style: const TextStyle(
-                //     fontFamily: 'THSarabunNew',
-                //     fontSize: 22,
-                //     fontWeight: FontWeight.bold,
-                //     color: Colors.pink),
                 style: StyleProjects().alertstyle3,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+//
+
+Future<Null> normalDialogOn(BuildContext context, String string) async {
+  showDialog(
+    context: context,
+    builder: (context) => SimpleDialog(
+      //backgroundColor: const Color.fromARGB(255, 171, 255, 172),
+      backgroundColor: const Color.fromARGB(255, 171, 255, 172),
+      title: ListTile(
+        leading: Container(
+          width: 40,
+          child: Image.asset('assets/images/master.png'),
+        ),
+        title: Text(
+          string,
+          style: StyleProjects().topicstyle8,
+        ),
+      ),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              // ignore: prefer_const_constructors
+              child: Text(
+                'ตกลง',
+                style: StyleProjects().alertstyle2,
               ),
             ),
           ],
@@ -179,7 +211,14 @@ class MyDialog {
     );
   }
 
-  void actionDialog({required bool cancleButton, required String title, required String message, required String label1, required String label2, required Null Function() presFunc1, required Null Function() presFunc2}) {}
+  void actionDialog(
+      {required bool cancleButton,
+      required String title,
+      required String message,
+      required String label1,
+      required String label2,
+      required Null Function() presFunc1,
+      required Null Function() presFunc2}) {}
 }
 
 //

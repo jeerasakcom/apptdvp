@@ -105,7 +105,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   stream: FirebaseFirestore.instance
                       .collection("news")
                       .orderBy('newstimes', descending: true)
-                      .limit(1)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -243,14 +242,16 @@ class _DashboardPageState extends State<DashboardPage> {
                                     buttonMinWidth: 90.0,
                                     children: <Widget>[
                                       TextButton(
-                                        onPressed: () {},
-                                        // onPressed: () {
-                                        //   Get.to(() => const NewsDetailPage(),
-                                        //       arguments: [
-                                        //         {"newstimes": item}
-                                        //       ],
-                                        //       preventDuplicates: false);
-                                        // },
+                                        onPressed: () {
+                                          //Navigator.pop(context);
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                const DashboardPage(
+                                              uid: '',
+                                            ),
+                                          ));
+                                        },
                                         child: Column(
                                           children: <Widget>[
                                             Icon(Icons.arrow_upward),

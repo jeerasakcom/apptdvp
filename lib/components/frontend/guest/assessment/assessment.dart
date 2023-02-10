@@ -16,7 +16,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
   @override
   void initState() {
     super.initState();
-    AppService().readQuantityPrint();
+    AppService().readQuantityPage();
     AppService().readQuantityBook();
     AppService().readBindingBook();
     AppService().readTypePrint();
@@ -96,7 +96,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
                               Column(
                                 children: [
                                   Text(
-                                    "ราคาประเมิน",
+                                    "ราคาประเมิน (บาท)",
                                     style: StyleProjects().topicstyle2,
                                   ),
                                   StyleProjects().boxwidth1,
@@ -130,8 +130,6 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                                         .chooseTypePrintModels
                                                         .length ==
                                                     1) {
-                                                  // Get.snackbar('รูปแบบการพิมพ์ ?',
-                                                  //     'กรุณาเลือกรูปแบบการพิมพ์ ด้วยคะ');
                                                   ScaffoldMessenger.of(context)
                                                       // ignore: prefer_const_constructors
                                                       .showSnackBar(SnackBar(
@@ -142,8 +140,6 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                                         .chooseQuantityPageModels
                                                         .length ==
                                                     1) {
-                                                  // Get.snackbar('จำนวนหน้า ?',
-                                                  //     'กรุณาเลือกจำนวนหน้า ด้วยคะ');
                                                   ScaffoldMessenger.of(context)
                                                       // ignore: prefer_const_constructors
                                                       .showSnackBar(SnackBar(
@@ -154,9 +150,6 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                                         .chooseBindingBookModels
                                                         .length ==
                                                     1) {
-                                                  // Get.snackbar(
-                                                  //     'วิธีการเข้าเล่ม ?',
-                                                  //     'กรุณาเลือกวิธีการเข้าเล่ม ด้วยคะ');
                                                   ScaffoldMessenger.of(context)
                                                       // ignore: prefer_const_constructors
                                                       .showSnackBar(SnackBar(
@@ -167,8 +160,6 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                                         .chooseQuantityBookModels
                                                         .length ==
                                                     1) {
-                                                  // Get.snackbar('จำนวนเล่ม ?',
-                                                  //     'กรุณาเลือกจำนวนเล่ม ด้วยคะ');
                                                   ScaffoldMessenger.of(context)
                                                       // ignore: prefer_const_constructors
                                                       .showSnackBar(SnackBar(
@@ -260,7 +251,7 @@ class _AssessmentPageState extends State<AssessmentPage> {
                                                   .chooseQuantityBookModels
                                                   .add(null);
 
-                                              appController.price.value = 0.0;
+                                              appController.price.value = 0.00;
                                             },
                                             child: Text(
                                               'แก้ไข',
@@ -377,52 +368,6 @@ class _AssessmentPageState extends State<AssessmentPage> {
           child: widget,
         ),
       ],
-    );
-  }
-
-  DropdownButton<Object> dropdownSizePaper(
-      {required AppController appController}) {
-    return DropdownButton(
-      isExpanded: true,
-      items: appController.sizePaperModels
-          .map(
-            (element) => DropdownMenuItem(
-              child: Text(
-                element.size,
-                style: StyleProjects().contentstyle5,
-              ),
-              value: element,
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        appController.chooseSizePaperModels.add(value);
-      },
-      value: appController.chooseSizePaperModels.last,
-      hint: const Text('เลือกขนาดกระดาษ'),
-    );
-  }
-
-  DropdownButton<Object> dropdownFormatPaper(
-      {required AppController appController}) {
-    return DropdownButton(
-      isExpanded: true,
-      items: appController.formatPaperModels
-          .map(
-            (element) => DropdownMenuItem(
-              child: Text(
-                element.paper,
-                style: StyleProjects().contentstyle5,
-              ),
-              value: element,
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        appController.chooseFormatPaperModels.add(value);
-      },
-      value: appController.chooseFormatPaperModels.last,
-      hint: const Text('เลือกรูปแบบกระดาษ'),
     );
   }
 

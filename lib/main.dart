@@ -1,80 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tdvp/components/backend/admin/create_admin.dart';
 import 'package:tdvp/components/backend/services/admin_service.dart';
 import 'package:tdvp/components/frontend/customer/service/customer_service.dart';
 import 'package:tdvp/components/frontend/guest/authentication/authentication.dart';
-import 'package:tdvp/components/frontend/guest/home/homepage.dart';
-import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/splashpage.dart';
 import 'package:tdvp/utility/style.dart';
-
-// var getPages = <GetPage<dynamic>>[
-//   GetPage(
-//     name: '/splash',
-//     page: () => const SplashPage(),
-//   ),
-//   GetPage(
-//     name: '/customer',
-//     page: () => const CustomerService(),
-//   ),
-//   GetPage(
-//     name: '/admin',
-//     page: () => AdminService(),
-//   ),
-// ];
-// String firstPage = '/splash';
-
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   HttpOverrides.global = MyHttpOverride();
-//   await Firebase.initializeApp().then((value) async {
-//     print('## initial OK #################');
-//     FirebaseAuth.instance.authStateChanges().listen((event) async {
-//       if (event != null) {
-//         print('## event ไม่เท่ากัน null');
-
-//         String uid = event.uid;
-//         await FirebaseFirestore.instance
-//             .collection('users')
-//             .doc(uid)
-//             .get()
-//             .then((value) {
-//           print('## value ----> ${value.data()}');
-
-//           UserModel userModel = UserModel.fromMap(value.data()!);
-
-//           print('## level ---> ${userModel.level}');
-
-//           firstPage = '/${userModel.level}';
-//           runApp(MyApp());
-//         });
-//       } else {
-//         runApp(MyApp());
-//       }
-//     });
-//   });
-// }
-
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   HttpOverrides.global = MyHttpOverride();
-//   await Firebase.initializeApp();
-//   await SharedPreferences.getInstance();
-
-//   SystemChrome.setPreferredOrientations(
-//       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
-//     runApp(const MyApp());
-//   });
-// }
 
 Map<String, WidgetBuilder> map = {
   StyleProjects.routeAuthen: (context) => const AuthenticationPage(),
@@ -83,7 +17,6 @@ Map<String, WidgetBuilder> map = {
 };
 
 String? firstState;
-String firstPage = '/splash';
 
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverride();
@@ -96,7 +29,6 @@ Future<void> main() async {
 
   if (result != null) {
     var datas = <String>[];
-    // datas = result;
     datas.addAll(result);
 
     switch (datas[1]) {
@@ -115,8 +47,9 @@ Future<void> main() async {
   await Firebase.initializeApp().then((value) {
     runApp(const MyApp());
   });
-} // endMain
+}
 
+//
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -130,28 +63,11 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white),
       home: const SplashPage(),
 
-      // home: // AddAdminPage(),
+      // home: AddAdminPage(),
       //     const HomePage(),
     );
   }
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//           primaryColor: StyleProjects().titlebar2,
-//           visualDensity: VisualDensity.adaptivePlatformDensity,
-//           scaffoldBackgroundColor: Colors.white),
-//       getPages: getPages,
-//       initialRoute: firstPage,
-//     );
-//   }
-// }
 
 class MyHttpOverride extends HttpOverrides {
   @override

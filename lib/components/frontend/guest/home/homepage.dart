@@ -14,7 +14,6 @@ import 'package:tdvp/components/frontend/guest/corporation/corporation.dart';
 import 'package:tdvp/components/frontend/guest/logistic/logistic.dart';
 import 'package:tdvp/components/frontend/guest/news/newspage.dart';
 import 'package:tdvp/components/frontend/guest/printing/printing.dart';
-import 'package:tdvp/states/calculate_price.dart';
 import 'package:tdvp/utility/style.dart';
 
 class HomePage extends StatefulWidget {

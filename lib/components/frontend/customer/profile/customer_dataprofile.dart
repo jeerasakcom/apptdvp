@@ -2,15 +2,9 @@ import 'package:avatar_view/avatar_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tdvp/components/frontend/customer/profile/customer_updateprofile.dart';
+import 'package:tdvp/components/frontend/customer/profile/updateprofile.dart';
 import 'package:tdvp/models/users_model.dart';
-import 'package:tdvp/utility/config_avatar.dart';
-import 'package:tdvp/utility/config_form.dart';
 import 'package:tdvp/utility/config_progress.dart';
-import 'package:tdvp/utility/config_text.dart';
-import 'package:tdvp/utility/config_text_button.dart';
-import 'package:tdvp/utility/config_title.dart';
-import 'package:tdvp/utility/dailog.dart';
 import 'package:tdvp/utility/style.dart';
 
 class CustomerReaderProfilePage extends StatefulWidget {
@@ -56,7 +50,7 @@ class _CustomerReaderProfilePageState extends State<CustomerReaderProfilePage> {
     }
     await FirebaseFirestore.instance
         .collection('users')
-        .where("level", isEqualTo: "admin")
+        .where("level", isEqualTo: "customer")
         .get()
         .then((value) {
       print('value ==> ${value.docs}');
@@ -241,7 +235,8 @@ class _CustomerReaderProfilePageState extends State<CustomerReaderProfilePage> {
                     radius: 75,
                     borderWidth: 8,
                     // borderColor: Color(0xff033674),
-                    borderColor: const Color(0xfff8d800),
+                    //borderColor: const Color(0xfff8d800),
+                    borderColor: const Color(0xFF0F33FF),
                     avatarType: AvatarType.CIRCLE,
                     backgroundColor: Colors.red,
                     imagePath: userModel!.images!,
@@ -265,7 +260,7 @@ class _CustomerReaderProfilePageState extends State<CustomerReaderProfilePage> {
                   newLabel(head: 'จังหวัด :', value: userModel!.province!),
                   newLabel(head: 'รหัสไปรษณีย์ :', value: userModel!.zipcode!),
                   newLabel(head: 'เบอร์โทรศัพท์ :', value: userModel!.phone!),
-                  newLabel(head: 'Email :', value: userModel!.email!),
+                  // newLabel(head: 'Email :', value: userModel!.email!),
                 ],
               ),
             ),
@@ -275,23 +270,23 @@ class _CustomerReaderProfilePageState extends State<CustomerReaderProfilePage> {
             //     mainAxisAlignment: MainAxisAlignment.end,
             //     children: [
             //       ElevatedButton(
+            //           style: ElevatedButton.styleFrom(
+            //             backgroundColor: const Color(0xFFFFBB4D),
+            //             shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(5),
+            //             ),
+            //           ),
             //           onPressed: () {
-            //             StyleDialog(context: context).actionDialog(
-            //                 title: 'ยืนยันการแก้ไข',
-            //                 message: 'คุณต้องการแก้ไข ?',
-            //                 label1: 'แก้ไข',
-            //                 label2: 'ยกเลิก',
-            //                 presFunc1: () {
-            //                   print('==>> ${docIdUsers}');
-            //                   // processUpdateDataProfile(docIdUsers: '');
-
-            //                   Navigator.pop(context);
-            //                 },
-            //                 presFunc2: () {
-            //                   Navigator.pop(context);
-            //                 });
+            //             Navigator.of(context).push(MaterialPageRoute(
+            //               builder: (context) => UpdateProfileCustomer(
+            //                 userModel: userModel!,
+            //               ),
+            //             ));
             //           },
-            //           child: Text("ปรับปรุงข้อมูล"))
+            //           child: Text(
+            //             "แก้ไขข้อมูล",
+            //             style: StyleProjects().topicstyle9,
+            //           ))
             //     ],
             //   ),
             // ),
@@ -299,74 +294,5 @@ class _CustomerReaderProfilePageState extends State<CustomerReaderProfilePage> {
         );
       }),
     );
-  }
-
-  //
-  Future<void> processUpdateDataProfile({required String docIdUsers}) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(docIdUsers)
-        .get()
-        .then((value) async {
-      UserModel userModel = UserModel.fromMap(value.data()!);
-      TextEditingController phoneController = TextEditingController();
-      phoneController.text = userModel.phone.toString();
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: ListTile(
-              title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                userModel.email.toString(),
-                style: StyleProjects().topicstyle4,
-              ),
-            ],
-          )),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                ConfigForm2(
-                    textInputType: TextInputType.number,
-                    controller: phoneController,
-                    label: 'เบอร์โทร',
-                    iconData: Icons.phone_callback_outlined,
-                    changeFunc: (String string) {}),
-              ],
-            ),
-          ),
-          actions: [
-            ConfigTextButton(
-              label: 'แก้ไข',
-              pressFunc: () async {
-                Navigator.pop(context);
-
-                String newphone = (phoneController.text);
-
-                Map<String, dynamic> map = userModel.toMap();
-
-                map['phone'] = newphone;
-
-                await FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(docIdUsers)
-                    .update(map)
-                    .then((value) {
-                  readDataProfile();
-                });
-              },
-            ),
-            ConfigTextButton(
-              label: 'ยกเลิก',
-              pressFunc: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      );
-    });
   }
 }

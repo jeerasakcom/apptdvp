@@ -257,20 +257,6 @@ class _DetailOrderBuyerState extends State<DetailOrderBuyer> {
                     ),
                   ],
                 ),
-                //String StartStatus = 'ส่งคำสั่งจัดซื้อ';
-                orderModel!.status == 'order'
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ConfigButton(
-                            label: 'ยกเลิกคำสั่งซื้อ',
-                            pressFunc: () {
-                              processCancelOrder();
-                            },
-                          ),
-                        ],
-                      )
-                    : const SizedBox()
               ],
             ),
           ),

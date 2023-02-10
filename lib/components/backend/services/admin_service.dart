@@ -139,6 +139,7 @@ class _AdminServiceState extends State<AdminService> {
                   blockListProducts(),
                   blockListOrder(),
                   blockListNews(),
+                  blockListAccount(),
                 ],
               ),
             ),
@@ -154,7 +155,7 @@ class _AdminServiceState extends State<AdminService> {
     return ListTile(
       leading: IconButton(
         icon: new Icon(
-          Icons.add_chart,
+          Icons.person_2_outlined,
           color: Colors.black,
         ),
         onPressed: () {},
@@ -171,13 +172,9 @@ class _AdminServiceState extends State<AdminService> {
       ),
       onTap: () {
         Navigator.pop(context);
-        setState(() {
-          currentWidget =
-              /* const DashboardAdminPages(
-            uid: '',
-          ); */
-              const ListsAdminPages();
-        });
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ListsAdminPages(),
+        ));
       },
     );
   }
@@ -263,25 +260,31 @@ class _AdminServiceState extends State<AdminService> {
         ),
       ),
       onTap: () {
+        // Navigator.pop(context);
+        // setState(() {
+        //   currentWidget = const ListsNewsPages();
+        // });
+
+        //
         Navigator.pop(context);
-        setState(() {
-          currentWidget = const ListsNewsPages();
-        });
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ListsNewsPages(),
+        ));
       },
     );
   }
 
-  ListTile buildListTransportation() {
+  ListTile blockListAccount() {
     return ListTile(
       leading: IconButton(
         icon: new Icon(
-          Icons.real_estate_agent,
+          Icons.add_task,
           color: Colors.black,
         ),
         onPressed: () {},
       ),
       title: const Text(
-        'การขนส่ง',
+        'รายงานสรุปการสั่งซื้อ',
         style: TextStyle(
           fontFamily: 'THSarabunNew',
           fontSize: 20,
@@ -293,93 +296,10 @@ class _AdminServiceState extends State<AdminService> {
       onTap: () {
         Navigator.pop(context);
         setState(() {
-          currentWidget = const ListsNewsPages();
-        });
-      },
-    );
-  }
-
-  ListTile buildListPrinting() {
-    return ListTile(
-      leading: IconButton(
-        icon: new Icon(
-          Icons.invert_colors,
-          //Icons.add_task,
-          color: Colors.black,
-        ),
-        onPressed: () {},
-      ),
-      title: const Text(
-        'ขั้นตอนการพิมพ์',
-        style: TextStyle(
-          fontFamily: 'THSarabunNew',
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          //color: const Color(0xFF000120),
-          color: Colors.black,
-        ),
-      ),
-      onTap: () {
-        Navigator.pop(context);
-        setState(() {
-          currentWidget = const ListsNewsPages();
-        });
-      },
-    );
-  }
-
-  // ListTile blockListAccount() {
-  //   return ListTile(
-  //     leading: IconButton(
-  //       icon: new Icon(
-  //         Icons.add_task,
-  //         color: Colors.black,
-  //       ),
-  //       onPressed: () {},
-  //     ),
-  //     title: const Text(
-  //       'รายรับ-รายจ่าย',
-  //       style: TextStyle(
-  //         fontFamily: 'THSarabunNew',
-  //         fontSize: 20,
-  //         fontWeight: FontWeight.bold,
-  //         //color: const Color(0xFF000120),
-  //         color: Colors.black,
-  //       ),
-  //     ),
-  //     onTap: () {
-  //       Navigator.pop(context);
-  //       setState(() {
-  //         currentWidget = const AccountingOrdersPage();
-  //         //AccountingPage();
-  //       });
-  //     },
-  //   );
-  // }
-
-  ListTile buildListFilePDF() {
-    return ListTile(
-      leading: IconButton(
-        icon: new Icon(
-          Icons.cloud_download,
-          color: Colors.black,
-        ),
-        onPressed: () {},
-      ),
-      title: const Text(
-        'ไฟล์งาน',
-        style: TextStyle(
-          fontFamily: 'THSarabunNew',
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          //color: const Color(0xFF000120),
-          color: Colors.black,
-        ),
-      ),
-      onTap: () {
-        Navigator.pop(context);
-        setState(() {
-          currentWidget = const ListsNewsPages();
+          currentWidget = const DashboardAdminPages(
+            uid: '',
+          );
+          //AccountingPage();
         });
       },
     );

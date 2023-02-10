@@ -8,7 +8,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tdvp/components/frontend/customer/dashboard/dashboardpage.dart';
 import 'package:tdvp/components/frontend/customer/service/customer_service.dart';
 import 'package:tdvp/models/order_model.dart';
 import 'package:tdvp/models/products_model.dart';
@@ -36,17 +35,12 @@ class _DisplayCartState extends State<DisplayCart> {
   var sqliteModels = <SQLiteModel>[];
   int total = 0;
   late String ordernumber;
-  String? title = 'มีรายการสั่งสินค้า';
-  String? detail = 'มีีรายการสั่งซื้อสินค้าจากลูกค้าค่ะ';
 
   bool displayConfirmOrder = false;
   File? file;
-  String? uidBuyer;
+  String? uidcustomers;
   String typeTransfer = 'onShop';
   String typePayment = 'promptPay';
-
-  String typeTransferA = 'onShop';
-  String typeTransferB = 'onDelivery';
 
   String urlSlip = '';
 
@@ -54,12 +48,12 @@ class _DisplayCartState extends State<DisplayCart> {
   void initState() {
     super.initState();
     readSQLite();
-    findUidBuyer();
+    findUidCustomer();
   }
 
-  Future<void> findUidBuyer() async {
+  Future<void> findUidCustomer() async {
     await FirebaseAuth.instance.authStateChanges().listen((event) {
-      uidBuyer = event!.uid;
+      uidcustomers = event!.uid;
     });
   }
 
@@ -176,7 +170,7 @@ class _DisplayCartState extends State<DisplayCart> {
                                           ),
                                           onPressed: () async {
                                             String nameSlip =
-                                                '$uidBuyer${Random().nextInt(1000)}.jpg';
+                                                '$uidcustomers${Random().nextInt(1000)}.jpg';
                                             FirebaseStorage firebaseStorage =
                                                 FirebaseStorage.instance;
                                             Reference reference =
@@ -277,113 +271,85 @@ class _DisplayCartState extends State<DisplayCart> {
             });
           },
         ),
-
-        Container(
-          //padding: EdgeInsets.only(left: 70),
-          padding: const EdgeInsets.all(10),
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            elevation: 5,
-            color: StyleProjects().cardStream9,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 40,
-                            // ignore: prefer_const_constructors
-                            child: Image(
-                              image: const AssetImage('assets/images/gsb.png'),
-                            ),
-                          ),
-                          StyleProjects().boxwidth1,
-                          ConfigText(
-                            lable: 'บัญชี : ',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                          ConfigText(
-                            lable: 'ธนาคารออมสิน สาขาพหลโยธิน',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                        ],
-                      ),
-                      StyleProjects().boxheight1,
-                      Row(
-                        children: [
-                          ConfigText(
-                            lable: 'ชื่อบัญชี : ',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                          ConfigText(
-                            lable: 'โรงพิมพ์อาสารักษาดินแดน กรมการปกครอง',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ConfigText(
-                            lable: 'เลขบัญชี : ',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                          ConfigText(
-                            lable: '7 - 900 - 10000 - 210',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ConfigText(
-                            lable: 'ประเภท : ',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                          ConfigText(
-                            lable: 'Payment',
-                            textStyle: StyleProjects().topicstyle8,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // RadioListTile(
-        //   title: ConfigText(
-        //     lable: 'ชำระผ่านPayment',
-        //     textStyle: StyleProjects().contentstyle5,
+        // Container(
+        //   //padding: EdgeInsets.only(left: 70),
+        //   padding: const EdgeInsets.all(10),
+        //   child: Card(
+        //     shape:
+        //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        //     elevation: 5,
+        //     color: StyleProjects().cardStream9,
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       children: [
+        //         Padding(
+        //           padding: EdgeInsets.all(5),
+        //           child: Column(
+        //             children: [
+        //               Row(
+        //                 children: [
+        //                   Container(
+        //                     height: 40,
+        //                     // ignore: prefer_const_constructors
+        //                     child: Image(
+        //                       image: const AssetImage('assets/images/gsb.png'),
+        //                     ),
+        //                   ),
+        //                   StyleProjects().boxwidth1,
+        //                   ConfigText(
+        //                     lable: 'บัญชี : ',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                   ConfigText(
+        //                     lable: 'ธนาคารออมสิน สาขาพหลโยธิน',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                 ],
+        //               ),
+        //               StyleProjects().boxheight1,
+        //               Row(
+        //                 children: [
+        //                   ConfigText(
+        //                     lable: 'ชื่อบัญชี : ',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                   ConfigText(
+        //                     lable: 'โรงพิมพ์อาสารักษาดินแดน กรมการปกครอง',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                 ],
+        //               ),
+        //               Row(
+        //                 children: [
+        //                   ConfigText(
+        //                     lable: 'เลขบัญชี : ',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                   ConfigText(
+        //                     lable: '7 - 900 - 10000 - 210',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                 ],
+        //               ),
+        //               Row(
+        //                 children: [
+        //                   ConfigText(
+        //                     lable: 'ประเภท : ',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                   ConfigText(
+        //                     lable: 'Payment',
+        //                     textStyle: StyleProjects().topicstyle8,
+        //                   ),
+        //                 ],
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ],
+        //     ),
         //   ),
-        //   value: 'ชำระผ่านPayment',
-        //   groupValue: typePayment,
-        //   onChanged: (value) {
-        //     setState(() {
-        //       typePayment = value.toString();
-        //     });
-        //   },
         // ),
-
-        RadioListTile(
-          title: ConfigText(
-            lable: 'ชำระด้วยเงินสด',
-            textStyle: StyleProjects().contentstyle5,
-          ),
-          value: 'ชำระด้วยเงินสด',
-          groupValue: typePayment,
-          onChanged: (value) {
-            setState(() {
-              typePayment = value.toString();
-            });
-          },
-        ),
       ],
     );
   }
@@ -394,6 +360,86 @@ class _DisplayCartState extends State<DisplayCart> {
       children: [
         Column(
           children: [
+            Container(
+              //padding: EdgeInsets.only(left: 70),
+              padding: const EdgeInsets.all(10),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                elevation: 5,
+                color: StyleProjects().cardStream9,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 40,
+                                // ignore: prefer_const_constructors
+                                child: Image(
+                                  image:
+                                      const AssetImage('assets/images/gsb.png'),
+                                ),
+                              ),
+                              StyleProjects().boxwidth1,
+                              ConfigText(
+                                lable: 'บัญชี : ',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                              ConfigText(
+                                lable: 'ธนาคารออมสิน สาขาพหลโยธิน',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                            ],
+                          ),
+                          StyleProjects().boxheight1,
+                          Row(
+                            children: [
+                              ConfigText(
+                                lable: 'ชื่อบัญชี : ',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                              ConfigText(
+                                lable: 'โรงพิมพ์อาสารักษาดินแดน กรมการปกครอง',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              ConfigText(
+                                lable: 'เลขบัญชี : ',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                              ConfigText(
+                                lable: '7 - 900 - 10000 - 210',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              ConfigText(
+                                lable: 'ประเภท : ',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                              ConfigText(
+                                lable: 'Payment',
+                                textStyle: StyleProjects().topicstyle8,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Row(
               children: [
                 ElevatedButton(
@@ -607,12 +653,12 @@ class _DisplayCartState extends State<DisplayCart> {
         ordertimes: dateOrder,
         ordernumber: ordernumber,
         productslists: mapOrders,
-        status: 'order',
+        status: 'รอดำเนินการ',
         ordertotal: total.toString(),
         payments: typePayment,
         logistics: typeTransfer,
         bankstatement: urlSlip,
-        uidcustomer: uidBuyer.toString());
+        uidcustomer: uidcustomers.toString());
 
     DocumentReference reference =
         FirebaseFirestore.instance.collection('orders').doc();
@@ -647,7 +693,6 @@ class _DisplayCartState extends State<DisplayCart> {
               .update(data)
               .then((value) {
             print('Success Update ${item.productname}');
-            // processSentAllNoti();
           });
         });
       }
@@ -661,33 +706,4 @@ class _DisplayCartState extends State<DisplayCart> {
       });
     });
   }
-
-  // Future<void> processSentAllNoti() async {
-  //   await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .where('level', isEqualTo: 'admin')
-  //       .get()
-  //       .then((value) async {
-  //     for (var element in value.docs) {
-  //       UserModel userModel = UserModel.fromMap(element.data());
-  //       if (userModel.token != null) {
-  //         String token = userModel.token!;
-  //         print('##3feb token ที่จะส่ง ---> $token');
-
-  //         String title = 'มีรายการสั่งสินค้า';
-  //         String detail = 'มีีรายการสั่งซื้อสินค้าจากลูกค้าค่ะ';
-
-  //         // String urlAPI =
-  //         //     'https://www.androidthai.in.th/fluttertraining/noti/newsNoti.php?isAdd=true&token=$token&title=$title&body=$detail';
-
-  //        String urlAPI =
-  //             'https://www.tdvpprinting.com/newsnoti/newsnoti.php?isAdd=true&token=$token&title=$title&body=$detail';
-
-  //         await Dio().get(urlAPI).then((value) {
-  //           print('Success sent Noti');
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
 }

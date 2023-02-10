@@ -14,169 +14,6 @@ import 'package:tdvp/utility/config_text_button.dart';
 import 'package:tdvp/utility/dailog.dart';
 import 'package:tdvp/utility/style.dart';
 
-/*
-class DashboardAdminPages extends StatelessWidget {
-  DashboardAdminPages({super.key, required this.uid});
-  final String uid;
-
-  List<String> nameIcons = [
-    '001.png',
-    '002.png',
-    '003.png',
-    '004.png',
-    '005.png',
-  ];
-
-  List<String> titles = [
-    'หมวดหมู่/แบบพิมพ์',
-    'การสั่งซื้อ',
-    'สถานะการพิมพ์',
-    'การจัดส่ง',
-    'รายงานสถิติ',
-  ];
-
-  List<Widget> widgets = [];
-
-  List<Widget> routToWidgdets = [
-    ListsAdminPages(),
-    ListsAdminPages(),
-    ListsAdminPages(),
-    ListsAdminPages(),
-    ListsAdminPages(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      /*
-      body: Stack(
-        children: <Widget>[
-          dashBg,
-          content,
-        ],
-      ),
-      */
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          height: height,
-          child: Column(
-            children: [
-              //dashBg,
-              //content,
-
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  get dashBg => Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(color: Color.fromARGB(255, 30, 30, 179)),
-            flex: 2,
-          ),
-          Expanded(
-            child: Container(color: Colors.transparent),
-            flex: 5,
-          ),
-        ],
-      );
-
-  get content => Container(
-        child: Column(
-          children: <Widget>[
-            header,
-            grid,
-          ],
-        ),
-      );
-
-  // ignore: prefer_const_constructors
-  get header => ListTile(
-        contentPadding: EdgeInsets.only(left: 20, right: 20, top: 20),
-        title: Text(
-          'Dashboard',
-          style: StyleProjects().topicstyle3,
-        ),
-        subtitle: Text(
-          'Admin',
-          style: StyleProjects().topicstyle3,
-        ),
-        trailing: const CircleAvatar(
-          radius: 50,
-          backgroundImage: AssetImage(
-            "assets/images/logo.png",
-          ),
-          // NetworkImage("${snapshot.data.hitsList[index].previewUrl}"),
-          backgroundColor: Colors.transparent,
-        ),
-      );
-
-  get grid => Expanded(
-        child: Container(
-          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          child: GridView.count(
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15,
-            crossAxisCount: 2,
-            childAspectRatio: 1,
-            children: List.generate(8, (_) {
-              return Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      FlutterLogo(),
-                    ],
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-      );
-
-  Widget createECard(String title, String nameIcon, int index) {
-    return GestureDetector(
-      onTap: () {},
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: const Color(0xff003a9f),
-        //color: const Color(0xffb3e5fc),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                child: Image.asset(
-                  'assets/images/icons/$nameIcon',
-                  width: 50,
-                  height: 50,
-                ),
-              ),
-              Text(
-                title,
-                style: StyleProjects().topicstyle6,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-*/
-
 class DashboardAdminPages extends StatefulWidget {
   const DashboardAdminPages({super.key, required this.uid});
   final String uid;
@@ -195,8 +32,6 @@ class _DashboardAdminPagesState extends State<DashboardAdminPages> {
   var docIdUsers = <String>[];
   var orderModels = <OrderModel>[];
   var docIdOrders = <String>[];
-  //String? newstatus = 'Cancel';
-  String? InOrders = "รับคำสั่งซื้อ";
 
   @override
   void initState() {
@@ -266,7 +101,7 @@ class _DashboardAdminPagesState extends State<DashboardAdminPages> {
             StyleProjects().header2(),
             StyleProjects().boxTop2,
             Text(
-              "คำสั่งซื้อใหม่",
+              "รายงานสรุป รายรับ-รายจ่าย",
               style: StyleProjects().topicstyle2,
             ),
             Padding(

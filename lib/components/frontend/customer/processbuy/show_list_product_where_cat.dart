@@ -76,99 +76,6 @@ class _ShowListProductWhereCatState extends State<ShowListProductWhereCat> {
       ),
       body: load
           ? const ConfigProgress()
-          /*
-          : ListView.builder(
-              itemCount: productModels.length,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () =>
-                    dialogAddCart(productModels[index], docProducts[index]),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: 50,
-                            height: 100,
-                            margin: const EdgeInsets.all(10),
-                            child: Image.network(
-                              productModels[index].images,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        // Container(
-                        //   width: 50,
-                        //   height: 100,
-                        //   margin: const EdgeInsets.all(10),
-                        //   child: Image.network(
-                        //     productModels[index].images,
-                        //     fit: BoxFit.cover,
-                        //   ),
-                        // ),
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  productModels[index].name,
-                                  style: StyleProjects().topicstyle9,
-                                  softWrap: true,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                ),
-                                Text(
-                                  'ราคา ${productModels[index].price.toString()} บาท',
-                                  style: StyleProjects().topicstyle9,
-                                  softWrap: true,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                ),
-                                Text(
-                                  'คงเหลือ ${productModels[index].quantity.toString()} เล่ม',
-                                  style: StyleProjects().topicstyle9,
-                                  softWrap: true,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                ),
-                              
-                              
-                                // ConfigText(
-                                //   lable: productModels[index].name,
-                                //   textStyle: StyleProjects().topicstyle4,
-                                // ),
-                                // ConfigText(
-                                //   lable:
-                                //       'ราคา ${productModels[index].price.toString()} บาท',
-                                //   textStyle: StyleProjects().topicstyle4,
-                                // ),
-                                // ConfigText(
-                                //   lable:
-                                //       'คงเหลือ ${productModels[index].quantity.toString()} เล่ม',
-                                //   textStyle: StyleProjects().topicstyle4,
-                                // ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-*/
-//
-
           : SingleChildScrollView(
               child: LayoutBuilder(builder: (context, constarints) {
                 return Column(
@@ -282,19 +189,6 @@ class _ShowListProductWhereCatState extends State<ShowListProductWhereCat> {
                 );
               }),
             ),
-
-      // body: load
-      //     // ? const ConfigProgress()
-      //     // : haveProducts!
-      //     ? newContent()
-      //     : Center(
-      //         child: ConfigText(
-      //           lable: 'ไม่มีแบบพิมพ์',
-      //           textStyle: StyleProjects().topicstyle4,
-      //         ),
-      //       ),
-
-      //
     );
   }
 
@@ -307,11 +201,6 @@ class _ShowListProductWhereCatState extends State<ShowListProductWhereCat> {
           StatefulBuilder(builder: (context, setState) {
         return AlertDialog(
           title: ListTile(
-            //leading: const ShowLogo(),
-            /* title: ShowText(
-              title: productModel.nameProduct,
-              textStyle: MyConstant().h2Style(),
-            ), */
             title: Center(
               child: ConfigText(
                 lable: productModel.name,
@@ -404,8 +293,8 @@ class _ShowListProductWhereCatState extends State<ShowListProductWhereCat> {
       docStock: idStock!,
     );
 
-    await SQLiteHelper().insertValueToSQLite(sqLiteModel).then(
-        (value) => normalDialog(context, 'เพิ่ม ${productModel.name} สำเร็จ'));
+    await SQLiteHelper().insertValueToSQLite(sqLiteModel).then((value) =>
+        normalDialogOn(context, 'เพิ่ม ${productModel.name} สำเร็จคะ'));
 
     //
   }
