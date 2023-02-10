@@ -39,7 +39,11 @@ class StyleProjects {
 
   // Route
   static String routeHome = '/home';
-  static String routAuthen = '/authen';
+  static String routeAuthen = '/authen';
+  static String routeRegister = '/register';
+  static String routeAdmin = '/adminservices';
+  static String routeCustomer = '/customerservices';
+  
 
   // img
   static String logo = 'assets/images/logo.png';

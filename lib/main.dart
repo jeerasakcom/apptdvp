@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,26 +11,27 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tdvp/components/backend/admin/create_admin.dart';
 import 'package:tdvp/components/backend/services/admin_service.dart';
 import 'package:tdvp/components/frontend/customer/service/customer_service.dart';
+import 'package:tdvp/components/frontend/guest/authentication/authentication.dart';
 import 'package:tdvp/components/frontend/guest/home/homepage.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/splashpage.dart';
 import 'package:tdvp/utility/style.dart';
 
-var getPages = <GetPage<dynamic>>[
-  GetPage(
-    name: '/splash',
-    page: () => const SplashPage(),
-  ),
-  GetPage(
-    name: '/customer',
-    page: () => const CustomerService(),
-  ),
-  GetPage(
-    name: '/admin',
-    page: () => AdminService(),
-  ),
-];
-String firstPage = '/splash';
+// var getPages = <GetPage<dynamic>>[
+//   GetPage(
+//     name: '/splash',
+//     page: () => const SplashPage(),
+//   ),
+//   GetPage(
+//     name: '/customer',
+//     page: () => const CustomerService(),
+//   ),
+//   GetPage(
+//     name: '/admin',
+//     page: () => AdminService(),
+//   ),
+// ];
+// String firstPage = '/splash';
 
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -62,17 +64,58 @@ String firstPage = '/splash';
 //   });
 // }
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  HttpOverrides.global = MyHttpOverride();
-  await Firebase.initializeApp();
-  await SharedPreferences.getInstance();
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   HttpOverrides.global = MyHttpOverride();
+//   await Firebase.initializeApp();
+//   await SharedPreferences.getInstance();
 
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+//   SystemChrome.setPreferredOrientations(
+//       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+//     runApp(const MyApp());
+//   });
+// }
+
+Map<String, WidgetBuilder> map = {
+  StyleProjects.routeAuthen: (context) => const AuthenticationPage(),
+  StyleProjects.routeAdmin: (context) => AdminService(),
+  StyleProjects.routeCustomer: (context) => const CustomerService(),
+};
+
+String? firstState;
+String firstPage = '/splash';
+
+Future<void> main() async {
+  HttpOverrides.global = MyHttpOverride();
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  var result = preferences.getStringList('data');
+  print('result main = $result');
+
+  if (result != null) {
+    var datas = <String>[];
+    // datas = result;
+    datas.addAll(result);
+
+    switch (datas[1]) {
+      case 'admin':
+        firstState = StyleProjects.routeAdmin;
+        break;
+      case 'customer':
+        firstState = StyleProjects.routeCustomer;
+        break;
+      default:
+        firstState = StyleProjects.routeAuthen;
+        break;
+    }
+  }
+
+  await Firebase.initializeApp().then((value) {
     runApp(const MyApp());
   });
-}
+} // endMain
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
