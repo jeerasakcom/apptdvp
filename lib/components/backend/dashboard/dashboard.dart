@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tdvp/components/backend/admin/lists_admin.dart';
 import 'package:tdvp/components/backend/order/mis_detail_orders.dart';
-import 'package:tdvp/models/order_model.dart';
+import 'package:tdvp/models/orders_model.dart';
+//import 'package:tdvp/models/order_model.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/config_progress.dart';
 import 'package:tdvp/utility/config_text.dart';
@@ -47,7 +48,8 @@ class _DashboardAdminPagesState extends State<DashboardAdminPages> {
       load = true;
       setState(() {});
     }
-    await FirebaseFirestore.instance
+    //await
+    FirebaseFirestore.instance
         .collection('orders')
         .orderBy('ordertimes', descending: true)
         .limit(10)
@@ -101,7 +103,7 @@ class _DashboardAdminPagesState extends State<DashboardAdminPages> {
             StyleProjects().header2(),
             StyleProjects().boxTop2,
             Text(
-              "รายงานสรุป รายรับ-รายจ่าย",
+              "รายงานสรุปการสั่งซื้อ",
               style: StyleProjects().topicstyle2,
             ),
             Padding(
@@ -506,52 +508,6 @@ class _DashboardAdminPagesState extends State<DashboardAdminPages> {
           .then((value) {
         readerOrders();
       });
-
-      // showDialog(
-      //   context: context,
-      //   builder: (BuildContext context) => AlertDialog(
-      //     title: ListTile(
-      //       title: Row(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         children: [
-      //           Text(
-      //             orderModel.ordernumber.toString(),
-      //             style: StyleProjects().topicstyle4,
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //     actions: [
-      //       ConfigTextButton(
-      //         label: 'ยกเลิกคำสั่งซื้อ',
-      //         pressFunc: () async {
-      //           Navigator.pop(context);
-
-      //           String newstatus = 'cancel';
-
-      //           Map<String, dynamic> map = orderModel.toMap();
-
-      //           map['status'] = newstatus;
-      //           print('##3feb map --> $map');
-
-      //           await FirebaseFirestore.instance
-      //               .collection('orders')
-      //               .doc(docIdOrders)
-      //               .update(map)
-      //               .then((value) {
-      //             readerOrders();
-      //           });
-      //         },
-      //       ),
-      //       ConfigTextButton(
-      //         label: 'ไม่',
-      //         pressFunc: () {
-      //           Navigator.pop(context);
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // );
     });
   }
 

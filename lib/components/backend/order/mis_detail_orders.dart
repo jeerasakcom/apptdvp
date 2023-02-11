@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tdvp/models/order_model.dart';
+import 'package:tdvp/models/orders_model.dart';
+//import 'package:tdvp/models/order_model.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/config_text.dart';
-import 'package:tdvp/utility/config_text_button.dart';
 import 'package:tdvp/utility/style.dart';
 
 class MisDetailOrderPage extends StatefulWidget {
@@ -117,7 +117,89 @@ class _MisDetailOrderPageState extends State<MisDetailOrderPage> {
                     ),
                   ],
                 ),
-                
+                Row(
+                  children: [
+                    Text(
+                      "ชื่อผู้สั่งพิมพ์ :",
+                      style: StyleProjects().topicstyle8,
+                    ),
+                    StyleProjects().boxwidth1,
+                    Text(
+                      orderModel!.customerfname,
+                      softWrap: true,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: StyleProjects().topicstyle8,
+                    ),
+                    StyleProjects().boxwidth2,
+                    Text(
+                      orderModel!.customerlname,
+                      softWrap: true,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: StyleProjects().topicstyle8,
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "ที่อยู่ :",
+                          style: StyleProjects().topicstyle8,
+                        ),
+                        StyleProjects().boxwidth1,
+                        Text(
+                          orderModel!.customeraddress,
+                          softWrap: true,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: StyleProjects().topicstyle8,
+                        ),
+                      ],
+                    ),
+                    Container(
+                      //padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          newLabel(
+                            head: 'ตำบล',
+                            value: orderModel!.customersubdistrict,
+                          ),
+                          newLabel(
+                              head: 'อำเภอ',
+                              value: orderModel!.customerdistrict),
+                          newLabel(
+                            head: 'จังหวัด',
+                            value: orderModel!.customerprovince,
+                          ),
+                          newLabel(
+                            head: 'รหัสไปรษณีย์',
+                            value: orderModel!.customerzipcode,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "เบอร์โทรศัพท์ : ",
+                      style: StyleProjects().topicstyle8,
+                    ),
+                    Text(
+                      orderModel!.customerphone,
+                      softWrap: true,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: StyleProjects().topicstyle8,
+                    ),
+                  ],
+                ),
                 Row(
                   children: [
                     Text(
@@ -403,15 +485,25 @@ class _MisDetailOrderPageState extends State<MisDetailOrderPage> {
     });
   }
 
-  Row newLabel({required String title, required String subTitle}) {
+  Row newLabel({required String head, required String value}) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ConfigText(
-          lable: title,
+        Expanded(
+          flex: 1,
+          child: Text(
+            head,
+            style: StyleProjects().topicstyle8,
+          ),
         ),
-        ConfigText(
-          lable: subTitle,
+        Expanded(
+          flex: 2,
+          child: Text(
+            value,
+            style: StyleProjects().topicstyle8,
+            softWrap: true,
+            //maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

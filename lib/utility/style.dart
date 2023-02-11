@@ -43,7 +43,7 @@ class StyleProjects {
   static String routeRegister = '/register';
   static String routeAdmin = '/adminservices';
   static String routeCustomer = '/customerservices';
-  
+  static String routeSplash = '/splash';
 
   // img
   static String logo = 'assets/images/logo.png';

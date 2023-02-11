@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tdvp/components/frontend/customer/ordershistory/detail_orders.dart';
-import 'package:tdvp/models/order_model.dart';
+import 'package:tdvp/models/orders_model.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/config_progress.dart';
 import 'package:tdvp/utility/config_text.dart';
@@ -56,9 +56,28 @@ class _HistoryOrdersPagesState extends State<HistoryOrdersPages> {
               mapOrders.add(item);
             }
 
+            // OrderModel orderModel = OrderModel(
+            //     ordertimes: item.data()['ordertimes'],
+            //     ordernumber: item.data()['ordernumber'],
+            //     productslists: mapOrders,
+            //     status: item.data()['status'],
+            //     ordertotal: item.data()['ordertotal'],
+            //     payments: item.data()['payments'],
+            //     logistics: item.data()['logistics'],
+            //     uidcustomer: item.data()['uidcustomer'],
+            //     bankstatement: item.data()['bankstatement']);
+
             OrderModel orderModel = OrderModel(
                 ordertimes: item.data()['ordertimes'],
                 ordernumber: item.data()['ordernumber'],
+                customerfname: item.data()['customerfname'],
+                customerlname: item.data()['customerlname'],
+                customeraddress: item.data()['customeraddress'],
+                customersubdistrict: item.data()['customersubdistrict'],
+                customerdistrict: item.data()['customerdistrict'],
+                customerprovince: item.data()['customerprovince'],
+                customerzipcode: item.data()['customerzipcode'],
+                customerphone: item.data()['customerphone'],
                 productslists: mapOrders,
                 status: item.data()['status'],
                 ordertotal: item.data()['ordertotal'],

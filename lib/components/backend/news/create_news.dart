@@ -287,9 +287,6 @@ class _CreateNewsPagesState extends State<CreateNewsPages> {
             } else {
               uploadPicture();
               processSentAllNoti();
-
-              //Get.back();
-              //Get.to(const CustomerService());
             }
           },
         ),
@@ -406,9 +403,6 @@ class _CreateNewsPagesState extends State<CreateNewsPages> {
         if (userModel.token != null) {
           String token = userModel.token!;
           print('##3feb token ที่จะส่ง ---> $token');
-
-          // String urlAPI =
-          //     'https://www.androidthai.in.th/fluttertraining/noti/newsNoti.php?isAdd=true&token=$token&title=$title&body=$detail';
 
           String urlAPI =
               'https://www.tdvpprinting.com/newsnoti/newsnoti.php?isAdd=true&token=$token&title=$title&body=$detail';

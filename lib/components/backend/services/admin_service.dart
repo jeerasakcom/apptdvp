@@ -6,15 +6,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tdvp/components/backend/accounting/accounting.dart';
+import 'package:tdvp/components/backend/admin/create_admin.dart';
 import 'package:tdvp/components/backend/admin/lists_admin.dart';
 import 'package:tdvp/components/backend/news/lists_news.dart';
 import 'package:tdvp/components/backend/order/mis_orders_page.dart';
 import 'package:tdvp/components/backend/products/list_products.dart';
-import 'package:tdvp/components/backend/services/dashboard.dart';
+import 'package:tdvp/components/backend/dashboard/dashboard.dart';
 import 'package:tdvp/components/backend/stock/lists_stock.dart';
 import 'package:tdvp/components/frontend/guest/authentication/authentication.dart';
 import 'package:tdvp/models/users_model.dart';
-import 'package:tdvp/utility/config_logout.dart';
 import 'package:tdvp/utility/config_text.dart';
 import 'package:tdvp/utility/style.dart';
 
@@ -80,14 +81,7 @@ class _AdminServiceState extends State<AdminService> {
       appBar: AppBar(
         backgroundColor: StyleProjects().primaryColor,
         actions: <Widget>[
-          // const ConfigLogout(),
           IconButton(
-              // onPressed: () async {
-              //   await FirebaseAuth.instance.signOut().then((value) {
-              //     Get.offAll(const AuthenticationPage());
-              //   });
-              // },
-
               onPressed: () async {
                 showDialog(
                   context: context,
@@ -135,7 +129,7 @@ class _AdminServiceState extends State<AdminService> {
               child: Column(
                 children: [
                   blockUserAccountsDrawerHeader(),
-                  blockListDataAdmin(),
+                  // blockListDataAdmin(),
                   blockListProducts(),
                   blockListOrder(),
                   blockListNews(),
@@ -172,9 +166,9 @@ class _AdminServiceState extends State<AdminService> {
       ),
       onTap: () {
         Navigator.pop(context);
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const ListsAdminPages(),
-        ));
+        setState(() {
+          currentWidget = const ListsAdminPages();
+        });
       },
     );
   }
@@ -260,16 +254,16 @@ class _AdminServiceState extends State<AdminService> {
         ),
       ),
       onTap: () {
-        // Navigator.pop(context);
-        // setState(() {
-        //   currentWidget = const ListsNewsPages();
-        // });
+        Navigator.pop(context);
+        setState(() {
+          currentWidget = const ListsNewsPages();
+        });
 
         //
-        Navigator.pop(context);
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const ListsNewsPages(),
-        ));
+        // Navigator.pop(context);
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => const ListsNewsPages(),
+        // ));
       },
     );
   }
@@ -299,7 +293,9 @@ class _AdminServiceState extends State<AdminService> {
           currentWidget = const DashboardAdminPages(
             uid: '',
           );
-          //AccountingPage();
+          //     AccountingPage(
+          //   uid: '',
+          // );
         });
       },
     );

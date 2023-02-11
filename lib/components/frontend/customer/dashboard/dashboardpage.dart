@@ -30,6 +30,8 @@ class _DashboardPageState extends State<DashboardPage> {
       body: Padding(
         padding: const EdgeInsets.all(0),
         child: Container(
+          //bg
+
           constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -42,19 +44,11 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
 
-          // constraints: BoxConstraints.expand(),
-          // // ignore: prefer_const_constructors
-          // decoration: BoxDecoration(
-          //   // ignore: prefer_const_constructors
-          //   image: DecorationImage(
-          //     image: const AssetImage("assets/images/bg.png"),
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
+              SizedBox(height: 20),
+              _backButton(),
               SizedBox(height: 20),
               headertdvp1(),
               SizedBox(height: 20),
@@ -243,15 +237,23 @@ class _DashboardPageState extends State<DashboardPage> {
                                     children: <Widget>[
                                       TextButton(
                                         onPressed: () {
-                                          //Navigator.pop(context);
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                const DashboardPage(
-                                              uid: '',
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const DashboardPage(
+                                                uid: '',
+                                              ),
                                             ),
-                                          ));
+                                          );
                                         },
+                                        // onPressed: () {
+                                        //   Get.to(() => const NewsDetailPage(),
+                                        //       arguments: [
+                                        //         {"newstimes": item}
+                                        //       ],
+                                        //       preventDuplicates: false);
+                                        // },
                                         child: Column(
                                           children: <Widget>[
                                             Icon(Icons.arrow_upward),

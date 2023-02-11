@@ -4,18 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tdvp/components/frontend/customer/assessment/result_assessment.dart';
+import 'package:tdvp/components/frontend/customer/buy/lists_category.dart';
 import 'package:tdvp/components/frontend/customer/dashboard/dashboardpage.dart';
 import 'package:tdvp/components/frontend/customer/ordershistory/history_orders.dart';
 import 'package:tdvp/components/frontend/customer/profile/customer_dataprofile.dart';
 import 'package:tdvp/components/frontend/guest/assessment/assessment.dart';
 import 'package:tdvp/components/frontend/guest/authentication/authentication.dart';
-import 'package:tdvp/components/frontend/customer/processbuy/lists_category.dart';
+import 'package:tdvp/controller/app_dialog.dart';
+//import 'package:tdvp/components/frontend/customer/processbuy/lists_category.dart';
 import 'package:tdvp/models/users_model.dart';
-import 'package:tdvp/utility/config_avatar.dart';
-import 'package:tdvp/utility/config_image.dart';
-import 'package:tdvp/utility/config_text.dart';
 import 'package:tdvp/utility/style.dart';
 
 class CustomerService extends StatefulWidget {
@@ -44,22 +42,61 @@ class _CustomerServiceState extends State<CustomerService> {
     findNameAnEmail();
   }
 
+  // Future<Null> findToken(String uid) async {
+  //   await Firebase.initializeApp().then((value) async {
+  //     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  //     await firebaseMessaging.getToken().then((value) async {
+  //       print('### uid ที่ login อยู่ ==>> $uid');
+  //       print('### token ==> $value');
+
+  //       Map<String, dynamic> data = {};
+  //       data['token'] = value;
+
+  //       await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(uid)
+  //           .update(data)
+  //           .then((value) => print('Update Token Success'));
+  //     });
+  //   });
+  // }
+
   Future<Null> findToken(String uid) async {
-    await Firebase.initializeApp().then((value) async {
-      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-      await firebaseMessaging.getToken().then((value) async {
-        print('### uid ที่ login อยู่ ==>> $uid');
-        print('### token ==> $value');
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    await firebaseMessaging.getToken().then((value) async {
+      print('### uid ที่ login อยู่ ==>> $uid');
+      print('##3feb token ==> $value');
 
-        Map<String, dynamic> data = {};
-        data['token'] = value;
+      Map<String, dynamic> data = Map();
+      //Map<String, dynamic> data = {};
+      data['token'] = value;
 
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .update(data)
-            .then((value) => print('Update Token Success'));
-      });
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .update(data)
+          .then((value) => print('Update Token Success'));
+    });
+
+    NotificationSettings notificationSettings =
+        await firebaseMessaging.requestPermission();
+    print('##3feb setting ===> ${notificationSettings.authorizationStatus}');
+
+    // open App
+    FirebaseMessaging.onMessage.listen((event) {
+      String? title = event.notification!.title;
+      String? body = event.notification!.body;
+      print('##3feb onMessage เปิดแอพอยู่ ---> $title, $body');
+      AppDialog(context: context).normalDialog(title: title!, message: body!);
+    });
+
+    // Close App
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      String? title = event.notification!.title;
+      String? body = event.notification!.body;
+
+      print('##3feb onMessage ปิดแอพอยู่ ---> $title, $body');
+      AppDialog(context: context).normalDialog(title: title!, message: body!);
     });
   }
 

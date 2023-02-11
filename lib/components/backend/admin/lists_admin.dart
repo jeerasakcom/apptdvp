@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:tdvp/components/backend/admin/create_admin.dart';
+
+//import 'package:tdvp/components/backend/admin/create_admin/create_admin.dart';
 import 'package:tdvp/models/users_model.dart';
 
 import 'package:tdvp/utility/config_form.dart';
@@ -63,20 +64,23 @@ class _ListsAdminPagesState extends State<ListsAdminPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 0, 110, 244),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddAdminPage(),
-              )).then((value) => readAdminData());
-        },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: const Color.fromARGB(255, 0, 110, 244),
+      //   onPressed: () {
+      //     Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => AddAdminPage(),
+      //         )).then((value) => readAdminData());
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //     color: Colors.white,
+      //   ),
+      // ),
+      // // appBar: AppBar(
+      //   backgroundColor: StyleProjects().primaryColor,
+      // ),
       body: load
           ? const ConfigProgress()
           : haveAdmin!
