@@ -200,7 +200,7 @@ class MyDialog {
         ),
         actions: [
           ConfigButton(
-            label: 'OK',
+            label: 'ตกลง',
             pressFunc: presFunc ??
                 () {
                   Navigator.pop(context);

@@ -16,6 +16,7 @@ import 'package:tdvp/models/sqlite_model.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/config_progress.dart';
 import 'package:tdvp/utility/config_text.dart';
+import 'package:tdvp/utility/dailog.dart';
 import 'package:tdvp/utility/style.dart';
 
 class DisplayCart extends StatefulWidget {
@@ -110,232 +111,261 @@ class _DisplayCartState extends State<DisplayCart> {
         backgroundColor: StyleProjects().primaryColor,
         title: const Text('ตะกร้า'),
       ),
-      body: load
-          ? const ConfigProgress()
-          : haveData!
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        StyleProjects().header2(),
-                        StyleProjects().boxheight1,
-                        Center(
-                          child: ConfigText(
-                            lable: 'ใบสั่งซื้อ',
-                            textStyle: StyleProjects().topicstyle4,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "ชื่อ",
-                              style: StyleProjects().contentstyle5,
-                            ),
-                            StyleProjects().boxwidth1,
-                            Text(
-                              userModel!.fname!,
-                              style: StyleProjects().contentstyle5,
-                            ),
-                            StyleProjects().boxwidth2,
-                            Text(
-                              userModel!.lname!,
-                              style: StyleProjects().contentstyle5,
-                            ),
-                          ],
-                        ),
+      // body: load
+      //     ? const ConfigProgress()
+      //     : haveData!
 
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "ที่อยู่",
-                                  style: StyleProjects().contentstyle5,
-                                ),
-                                StyleProjects().boxwidth2,
-                                Text(
-                                  userModel!.address!,
-                                  style: StyleProjects().contentstyle5,
-                                ),
-                              ],
-                            ),
-                            Container(
-                              //padding: const EdgeInsets.all(20),
-                              padding: EdgeInsets.symmetric(horizontal: 30),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  newLabel(
-                                      head: 'ตำบล',
-                                      value: userModel!.subdistrict!),
-                                  newLabel(
-                                      head: 'อำเภอ',
-                                      value: userModel!.district!),
-                                  newLabel(
-                                      head: 'จังหวัด',
-                                      value: userModel!.province!),
-                                  newLabel(
-                                      head: 'รหัสไปรษณีย์',
-                                      value: userModel!.zipcode!),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+      //         // ? Padding(
+      //         //     padding: const EdgeInsets.all(8.0),
+      //         //     child: SingleChildScrollView(
+      //         //       child: Column(
+      //         //         crossAxisAlignment: CrossAxisAlignment.center,
+      //         //         children: [
+      //         //           StyleProjects().header2(),
+      //         //           StyleProjects().boxheight1,
+      //         //           Center(
+      //         //             child: ConfigText(
+      //         //               lable: 'ใบสั่งซื้อ',
+      //         //               textStyle: StyleProjects().topicstyle4,
+      //         //             ),
+      //         //           ),
+      //         //           Row(
+      //         //             children: [
+      //         //               Text(
+      //         //                 "ชื่อ",
+      //         //                 style: StyleProjects().contentstyle5,
+      //         //               ),
+      //         //               StyleProjects().boxwidth1,
+      //         //               Text(
+      //         //                 userModel!.fname!,
+      //         //                 style: StyleProjects().contentstyle5,
+      //         //               ),
+      //         //               StyleProjects().boxwidth2,
+      //         //               Text(
+      //         //                 userModel!.lname!,
+      //         //                 style: StyleProjects().contentstyle5,
+      //         //               ),
+      //         //             ],
+      //         //           ),
 
-                        Row(
-                          children: [
-                            Text(
-                              "เบอร์โทรศัพท์",
-                              style: StyleProjects().contentstyle5,
-                            ),
-                            StyleProjects().boxwidth2,
-                            Text(
-                              userModel!.phone!,
-                              style: StyleProjects().contentstyle5,
-                            ),
-                          ],
-                        ),
+      //         //           Column(
+      //         //             children: [
+      //         //               Row(
+      //         //                 children: [
+      //         //                   Text(
+      //         //                     "ที่อยู่",
+      //         //                     style: StyleProjects().contentstyle5,
+      //         //                   ),
+      //         //                   StyleProjects().boxwidth2,
+      //         //                   Text(
+      //         //                     userModel!.address!,
+      //         //                     style: StyleProjects().contentstyle5,
+      //         //                   ),
+      //         //                 ],
+      //         //               ),
+      //         //               Container(
+      //         //                 //padding: const EdgeInsets.all(20),
+      //         //                 padding: EdgeInsets.symmetric(horizontal: 30),
+      //         //                 child: Column(
+      //         //                   mainAxisAlignment: MainAxisAlignment.start,
+      //         //                   children: [
+      //         //                     newLabel(
+      //         //                         head: 'ตำบล',
+      //         //                         value: userModel!.subdistrict!),
+      //         //                     newLabel(
+      //         //                         head: 'อำเภอ',
+      //         //                         value: userModel!.district!),
+      //         //                     newLabel(
+      //         //                         head: 'จังหวัด',
+      //         //                         value: userModel!.province!),
+      //         //                     newLabel(
+      //         //                         head: 'รหัสไปรษณีย์',
+      //         //                         value: userModel!.zipcode!),
+      //         //                   ],
+      //         //                 ),
+      //         //               ),
+      //         //             ],
+      //         //           ),
 
-                        const Divider(
-                          color: Colors.blue,
-                        ),
+      //         //           Row(
+      //         //             children: [
+      //         //               Text(
+      //         //                 "เบอร์โทรศัพท์",
+      //         //                 style: StyleProjects().contentstyle5,
+      //         //               ),
+      //         //               StyleProjects().boxwidth2,
+      //         //               Text(
+      //         //                 userModel!.phone!,
+      //         //                 style: StyleProjects().contentstyle5,
+      //         //               ),
+      //         //             ],
+      //         //           ),
 
-                        // Container(
-                        //   padding: const EdgeInsets.all(10),
-                        //   child: Column(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       newLabel(
-                        //           head: 'ตำบล', value: userModel!.subdistrict!),
-                        //       newLabel(
-                        //           head: 'อำเภอ', value: userModel!.district!),
-                        //       newLabel(
-                        //           head: 'จังหวัด', value: userModel!.province!),
-                        //       newLabel(
-                        //           head: 'รหัสไปรษณีย์',
-                        //           value: userModel!.zipcode!),
-                        //     ],
-                        //   ),
-                        // ),
+      //         //           const Divider(
+      //         //             color: Colors.blue,
+      //         //           ),
 
-                        //
+      //         //           // Container(
+      //         //           //   padding: const EdgeInsets.all(10),
+      //         //           //   child: Column(
+      //         //           //     mainAxisAlignment: MainAxisAlignment.start,
+      //         //           //     children: [
+      //         //           //       newLabel(
+      //         //           //           head: 'ตำบล', value: userModel!.subdistrict!),
+      //         //           //       newLabel(
+      //         //           //           head: 'อำเภอ', value: userModel!.district!),
+      //         //           //       newLabel(
+      //         //           //           head: 'จังหวัด', value: userModel!.province!),
+      //         //           //       newLabel(
+      //         //           //           head: 'รหัสไปรษณีย์',
+      //         //           //           value: userModel!.zipcode!),
+      //         //           //     ],
+      //         //           //   ),
+      //         //           // ),
 
-                        // Center(
-                        //   child: ConfigText(
-                        //     lable: 'รายการแบบพิมพ์',
-                        //     textStyle: StyleProjects().topicstyle4,
-                        //   ),
-                        // ),
-                        Text(
-                          'รายการแบบพิมพ์',
-                          style: StyleProjects().topicstyle9,
+      //         //           //
+
+      //         //           // Center(
+      //         //           //   child: ConfigText(
+      //         //           //     lable: 'รายการแบบพิมพ์',
+      //         //           //     textStyle: StyleProjects().topicstyle4,
+      //         //           //   ),
+      //         //           // ),
+      //         //           Text(
+      //         //             'รายการแบบพิมพ์',
+      //         //             style: StyleProjects().topicstyle9,
+      //         //           ),
+      //         //           showHead(),
+      //         //           listCart(),
+      //         //           const Divider(
+      //         //             color: Colors.blue,
+      //         //           ),
+      //         //           newTotal(),
+      //         //           newControlButton(),
+      //         //           displayConfirmOrder
+      //         //               ? newTypeTransfer()
+      //         //               : const SizedBox(),
+      //         //           displayConfirmOrder
+      //         //               ? newTypePayment()
+      //         //               : const SizedBox(),
+      //         //           // (displayConfirmOrder && (typePayment == 'Payment'))
+      //         //           //     ? showPromptPay()
+      //         //           //     : displayConfirmOrder
+      //         //           //         ? ElevatedButton(
+      //         //           //             onPressed: () => processSaveOrder(),
+      //         //           //             child: const Text('ยืนยันการสั่งซื้อ'),
+      //         //           //           )
+      //         //           //         : const SizedBox(),
+      //         //           (displayConfirmOrder && (typePayment == 'Payment'))
+      //         //               ? showPromptPay()
+      //         //               : displayConfirmOrder
+      //         //                   ? ElevatedButton(
+      //         //                       style: ElevatedButton.styleFrom(
+      //         //                         backgroundColor: Colors.green,
+      //         //                         shape: RoundedRectangleBorder(
+      //         //                           borderRadius: BorderRadius.circular(5),
+      //         //                         ),
+      //         //                       ),
+      //         //                       onPressed: () => processSaveOrder(),
+      //         //                       child: Text(
+      //         //                         'ยืนยันการสั่งซื้อ',
+      //         //                         style: StyleProjects().contentstyle1,
+      //         //                       ),
+      //         //                     )
+      //         //                   : const SizedBox(),
+      //         //           file == null
+      //         //               ? const SizedBox()
+      //         //               : Row(
+      //         //                   mainAxisAlignment: MainAxisAlignment.center,
+      //         //                   children: [
+      //         //                     Column(
+      //         //                       children: [
+      //         //                         Container(
+      //         //                           margin: const EdgeInsets.symmetric(
+      //         //                               vertical: 32),
+      //         //                           width: 200,
+      //         //                           height: 200,
+      //         //                           child: Image.file(file!),
+      //         //                         ),
+      //         //                         ElevatedButton(
+      //         //                             style: ElevatedButton.styleFrom(
+      //         //                               backgroundColor:
+      //         //                                   const Color.fromARGB(
+      //         //                                       255, 48, 32, 223),
+      //         //                               shape: RoundedRectangleBorder(
+      //         //                                 borderRadius:
+      //         //                                     BorderRadius.circular(5),
+      //         //                               ),
+      //         //                             ),
+      //         //                             onPressed: () async {
+      //         //                               String nameSlip =
+      //         //                                   '$uidcustomers${Random().nextInt(1000)}.jpg';
+      //         //                               FirebaseStorage firebaseStorage =
+      //         //                                   FirebaseStorage.instance;
+      //         //                               Reference reference =
+      //         //                                   firebaseStorage
+      //         //                                       .ref()
+      //         //                                       .child('slip/$nameSlip');
+      //         //                               UploadTask uploadTask =
+      //         //                                   reference.putFile(file!);
+      //         //                               await uploadTask
+      //         //                                   .whenComplete(() async {
+      //         //                                 await reference
+      //         //                                     .getDownloadURL()
+      //         //                                     .then((value) async {
+      //         //                                   urlSlip = value.toString();
+      //         //                                   print('==> $urlSlip');
+      //         //                                   processSaveOrder();
+      //         //                                 });
+      //         //                               });
+      //         //                             },
+      //         //                             child: Text(
+      //         //                               'อัพโหลด สลิปการจ่ายเงิน ยืนยันการสั่งซื้อ',
+      //         //                               style:
+      //         //                                   StyleProjects().contentstyle1,
+      //         //                             ))
+      //         //                       ],
+      //         //                     ),
+      //         //                   ],
+      //         //                 ),
+      //         //         ],
+      //         //       ),
+      //         //     ),
+      //         //   )
+
+      //         ? const ConfigProgress()
+      //         : haveData!
+      //             ? blocklistsorders()
+      //             : Center(
+      //                 child: ConfigText(
+      //                   lable: 'ไม่มีสินค้าในตะกร้า',
+      //                   textStyle: StyleProjects().topicstyle4,
+      //                 ),
+      //               ),
+
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // StyleProjects().boxTop2,
+            // StyleProjects().header2(),
+            // StyleProjects().boxTop2,
+            // Text(
+            //   "การจัดซื้อจัดพิมพ์",
+            //   style: StyleProjects().topicstyle2,
+            // ),
+            load
+                ? const ConfigProgress()
+                : haveData!
+                    ? blocklistsorders()
+                    : Center(
+                        child: ConfigText(
+                          lable: 'ไม่มีสินค้าในตะกร้า',
+                          textStyle: StyleProjects().topicstyle4,
                         ),
-                        showHead(),
-                        listCart(),
-                        const Divider(
-                          color: Colors.blue,
-                        ),
-                        newTotal(),
-                        newControlButton(),
-                        displayConfirmOrder
-                            ? newTypeTransfer()
-                            : const SizedBox(),
-                        displayConfirmOrder
-                            ? newTypePayment()
-                            : const SizedBox(),
-                        // (displayConfirmOrder && (typePayment == 'Payment'))
-                        //     ? showPromptPay()
-                        //     : displayConfirmOrder
-                        //         ? ElevatedButton(
-                        //             onPressed: () => processSaveOrder(),
-                        //             child: const Text('ยืนยันการสั่งซื้อ'),
-                        //           )
-                        //         : const SizedBox(),
-                        (displayConfirmOrder && (typePayment == 'Payment'))
-                            ? showPromptPay()
-                            : displayConfirmOrder
-                                ? ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                    ),
-                                    onPressed: () => processSaveOrder(),
-                                    child: Text(
-                                      'ยืนยันการสั่งซื้อ',
-                                      style: StyleProjects().contentstyle1,
-                                    ),
-                                  )
-                                : const SizedBox(),
-                        file == null
-                            ? const SizedBox()
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 32),
-                                        width: 200,
-                                        height: 200,
-                                        child: Image.file(file!),
-                                      ),
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 48, 32, 223),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                          ),
-                                          onPressed: () async {
-                                            String nameSlip =
-                                                '$uidcustomers${Random().nextInt(1000)}.jpg';
-                                            FirebaseStorage firebaseStorage =
-                                                FirebaseStorage.instance;
-                                            Reference reference =
-                                                firebaseStorage
-                                                    .ref()
-                                                    .child('slip/$nameSlip');
-                                            UploadTask uploadTask =
-                                                reference.putFile(file!);
-                                            await uploadTask
-                                                .whenComplete(() async {
-                                              await reference
-                                                  .getDownloadURL()
-                                                  .then((value) async {
-                                                urlSlip = value.toString();
-                                                print('==> $urlSlip');
-                                                processSaveOrder();
-                                              });
-                                            });
-                                          },
-                                          child: Text(
-                                            'อัพโหลด สลิปการจ่ายเงิน ยืนยันการสั่งซื้อ',
-                                            style:
-                                                StyleProjects().contentstyle1,
-                                          ))
-                                    ],
-                                  ),
-                                ],
-                              ),
-                      ],
-                    ),
-                  ),
-                )
-              : Center(
-                  child: ConfigText(
-                    lable: 'ไม่มีสินค้าในตะกร้า',
-                    textStyle: StyleProjects().topicstyle4,
-                  ),
-                ),
+                      ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -858,17 +888,6 @@ class _DisplayCartState extends State<DisplayCart> {
         bankstatement: urlSlip,
         uidcustomer: uidcustomers.toString());
 
-    // OrderModel orderModel = OrderModel(
-    //     ordertimes: dateOrder,
-    //     ordernumber: ordernumber,
-    //     productslists: mapOrders,
-    //     status: 'รอดำเนินการ',
-    //     ordertotal: total.toString(),
-    //     payments: typePayment,
-    //     logistics: typeTransfer,
-    //     bankstatement: urlSlip,
-    //     uidcustomer: uidcustomers.toString());
-
     DocumentReference reference =
         FirebaseFirestore.instance.collection('orders').doc();
 
@@ -903,17 +922,54 @@ class _DisplayCartState extends State<DisplayCart> {
               .then((value) {
             print('Success Update ${item.productname}');
             // processSentAllNoti();
+            const ConfigProgress();
           });
         });
       }
 
+      // await SQLiteHelper().deleteAllData().then((value) async {
+      //   Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => const CustomerService(),
+      //       ),);
+      // });
+
       await SQLiteHelper().deleteAllData().then((value) async {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CustomerService(),
-            ));
-      });
+        // const ConfigProgress();
+        // normalDialogOn(
+        //     context, 'คำสั่งจัดซื้อที่ ${orderModel.ordernumber} สำเร็จคะ');
+        // Navigator.pop(context);
+
+        StyleDialog(context: context).actionDialog(
+            title: 'คำสั่งซื้อ',
+            message: 'คำสั่งจัดซื้อที่ ${orderModel.ordernumber} สำเร็จคะ',
+            label1: 'ตกลง',
+            label2: 'ออก',
+            presFunc1: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CustomerService(),
+                ),
+              );
+            },
+            presFunc2: () {
+              Navigator.pop(context);
+              MaterialPageRoute(
+                builder: (context) => const CustomerService(),
+              );
+            });
+    
+    
+    
+     });
+
+      // await SQLiteHelper().deleteAllData().then((value) => normalDialogOn(
+      //     context, 'สั่งซื้อ ${orderModel.ordernumber} สำเร็จคะ'));
+
+      //
     });
   }
 
@@ -966,4 +1022,223 @@ class _DisplayCartState extends State<DisplayCart> {
   //     }
   //   });
   // }
+
+  Widget blocklistsorders() {
+    return SingleChildScrollView(
+      child: LayoutBuilder(builder: (context, constarints) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    StyleProjects().header2(),
+                    StyleProjects().boxheight1,
+                    Center(
+                      child: ConfigText(
+                        lable: 'ใบสั่งซื้อ',
+                        textStyle: StyleProjects().topicstyle4,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "ชื่อ",
+                          style: StyleProjects().contentstyle5,
+                        ),
+                        StyleProjects().boxwidth1,
+                        Text(
+                          userModel!.fname!,
+                          style: StyleProjects().contentstyle5,
+                        ),
+                        StyleProjects().boxwidth2,
+                        Text(
+                          userModel!.lname!,
+                          style: StyleProjects().contentstyle5,
+                        ),
+                      ],
+                    ),
+
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "ที่อยู่",
+                              style: StyleProjects().contentstyle5,
+                            ),
+                            StyleProjects().boxwidth2,
+                            Text(
+                              userModel!.address!,
+                              style: StyleProjects().contentstyle5,
+                            ),
+                          ],
+                        ),
+                        Container(
+                          //padding: const EdgeInsets.all(20),
+                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              newLabel(
+                                  head: 'ตำบล', value: userModel!.subdistrict!),
+                              newLabel(
+                                  head: 'อำเภอ', value: userModel!.district!),
+                              newLabel(
+                                  head: 'จังหวัด', value: userModel!.province!),
+                              newLabel(
+                                  head: 'รหัสไปรษณีย์',
+                                  value: userModel!.zipcode!),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      children: [
+                        Text(
+                          "เบอร์โทรศัพท์",
+                          style: StyleProjects().contentstyle5,
+                        ),
+                        StyleProjects().boxwidth2,
+                        Text(
+                          userModel!.phone!,
+                          style: StyleProjects().contentstyle5,
+                        ),
+                      ],
+                    ),
+
+                    const Divider(
+                      color: Colors.blue,
+                    ),
+
+                    // Container(
+                    //   padding: const EdgeInsets.all(10),
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     children: [
+                    //       newLabel(
+                    //           head: 'ตำบล', value: userModel!.subdistrict!),
+                    //       newLabel(
+                    //           head: 'อำเภอ', value: userModel!.district!),
+                    //       newLabel(
+                    //           head: 'จังหวัด', value: userModel!.province!),
+                    //       newLabel(
+                    //           head: 'รหัสไปรษณีย์',
+                    //           value: userModel!.zipcode!),
+                    //     ],
+                    //   ),
+                    // ),
+
+                    //
+
+                    // Center(
+                    //   child: ConfigText(
+                    //     lable: 'รายการแบบพิมพ์',
+                    //     textStyle: StyleProjects().topicstyle4,
+                    //   ),
+                    // ),
+                    Text(
+                      'รายการแบบพิมพ์',
+                      style: StyleProjects().topicstyle9,
+                    ),
+                    showHead(),
+                    listCart(),
+                    const Divider(
+                      color: Colors.blue,
+                    ),
+                    newTotal(),
+                    newControlButton(),
+                    displayConfirmOrder ? newTypeTransfer() : const SizedBox(),
+                    displayConfirmOrder ? newTypePayment() : const SizedBox(),
+                    // (displayConfirmOrder && (typePayment == 'Payment'))
+                    //     ? showPromptPay()
+                    //     : displayConfirmOrder
+                    //         ? ElevatedButton(
+                    //             onPressed: () => processSaveOrder(),
+                    //             child: const Text('ยืนยันการสั่งซื้อ'),
+                    //           )
+                    //         : const SizedBox(),
+                    (displayConfirmOrder && (typePayment == 'Payment'))
+                        ? showPromptPay()
+                        : displayConfirmOrder
+                            ? ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                onPressed: () => processSaveOrder(),
+                                child: Text(
+                                  'ยืนยันการสั่งซื้อ',
+                                  style: StyleProjects().contentstyle1,
+                                ),
+                              )
+                            : const SizedBox(),
+                    file == null
+                        ? const SizedBox()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 32),
+                                    width: 200,
+                                    height: 200,
+                                    child: Image.file(file!),
+                                  ),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 48, 32, 223),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        String nameSlip =
+                                            '$uidcustomers${Random().nextInt(1000)}.jpg';
+                                        FirebaseStorage firebaseStorage =
+                                            FirebaseStorage.instance;
+                                        Reference reference = firebaseStorage
+                                            .ref()
+                                            .child('slip/$nameSlip');
+                                        UploadTask uploadTask =
+                                            reference.putFile(file!);
+                                        await uploadTask.whenComplete(() async {
+                                          await reference
+                                              .getDownloadURL()
+                                              .then((value) async {
+                                            urlSlip = value.toString();
+                                            print('==> $urlSlip');
+                                            processSaveOrder();
+                                          });
+                                        });
+                                      },
+                                      child: Text(
+                                        'อัพโหลด สลิปการจ่ายเงิน ยืนยันการสั่งซื้อ',
+                                        style: StyleProjects().contentstyle1,
+                                      ))
+                                ],
+                              ),
+                            ],
+                          ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        );
+      }),
+    );
+  }
 }

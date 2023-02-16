@@ -110,7 +110,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("news")
-                      .orderBy('newstimes', descending: true)
+                      .orderBy('newstimes', descending: false)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {

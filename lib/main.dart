@@ -14,60 +14,60 @@ import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/splashpage.dart';
 import 'package:tdvp/utility/style.dart';
 
-Map<String, WidgetBuilder> map = {
-  StyleProjects.routeAdmin: (context) => AdminService(),
-  StyleProjects.routeCustomer: (context) => const CustomerService(),
-  StyleProjects.routeSplash: (context) => const SplashPage(),
-};
+// Map<String, WidgetBuilder> map = {
+//   StyleProjects.routeAdmin: (context) => AdminService(),
+//   StyleProjects.routeCustomer: (context) => const CustomerService(),
+//   StyleProjects.routeSplash: (context) => const SplashPage(),
+// };
 
-String? firstState;
+// String? firstState;
 
-Future<void> main() async {
-  HttpOverrides.global = MyHttpOverride();
-
-  WidgetsFlutterBinding.ensureInitialized();
-
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  var result = preferences.getStringList('data');
-  print('result main = $result');
-
-  if (result != null) {
-    var datas = <String>[];
-    datas.addAll(result);
-
-    switch (datas[1]) {
-      case 'admin':
-        firstState = StyleProjects.routeAdmin;
-        break;
-      case 'customer':
-        firstState = StyleProjects.routeCustomer;
-        break;
-      default:
-        firstState = StyleProjects.routeSplash;
-        break;
-    }
-  }
-
-  await Firebase.initializeApp().then((value) {
-    runApp(const MyApp());
-  });
-}
-
-// String initialRoute = '/authen';
-
-// Future<Null> main() async {
+// Future<void> main() async {
 //   HttpOverrides.global = MyHttpOverride();
 
 //   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp().then((value) async {
-//     await FirebaseAuth.instance.authStateChanges().listen((event) {
-//       if (event != null) {
-//         initialRoute = '/splash';
-//       }
-//       runApp(MyApp());
-//     });
+
+//   SharedPreferences preferences = await SharedPreferences.getInstance();
+//   var result = preferences.getStringList('data');
+//   print('result main = $result');
+
+//   if (result != null) {
+//     var datas = <String>[];
+//     datas.addAll(result);
+
+//     switch (datas[1]) {
+//       case 'admin':
+//         firstState = StyleProjects.routeAdmin;
+//         break;
+//       case 'customer':
+//         firstState = StyleProjects.routeCustomer;
+//         break;
+//       default:
+//         firstState = StyleProjects.routeSplash;
+//         break;
+//     }
+//   }
+
+//   await Firebase.initializeApp().then((value) {
+//     runApp(const MyApp());
 //   });
 // }
+
+String initialRoute = '/splash';
+
+Future<Null> main() async {
+  HttpOverrides.global = MyHttpOverride();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value) async {
+    await FirebaseAuth.instance.authStateChanges().listen((event) {
+      if (event != null) {
+        initialRoute = '/splash';
+      }
+      runApp(MyApp());
+    });
+  });
+}
 
 //
 class MyApp extends StatelessWidget {

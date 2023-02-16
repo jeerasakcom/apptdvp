@@ -39,7 +39,7 @@ class _ListsNewsPagesState extends State<ListsNewsPages> {
     //await
     FirebaseFirestore.instance
         .collection('news')
-        .orderBy('newstimes', descending: true)
+        .orderBy('newstimes', descending: false)
         .get()
         .then((value) {
       print('value ==> ${value.docs}');
@@ -128,9 +128,10 @@ class _ListsNewsPagesState extends State<ListsNewsPages> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     elevation: 1,
-                    color: StyleProjects().cardStream2,
+                    //color: StyleProjects().cardStream2,
                     //color: const Color(0xffff9c7a),
-                    //color: const Color(0xFFBEE3C1),
+                    // color: const Color(0xFFBEE3C1),
+                    color: const Color(0xff00bbd4),
                     // Color.fromARGB(255, 136, 223, 161),
                     child: Column(
                       children: [

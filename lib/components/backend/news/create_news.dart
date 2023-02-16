@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tdvp/components/backend/news/lists_news.dart';
+import 'package:tdvp/components/frontend/customer/service/customer_service.dart';
 import 'package:tdvp/models/news_model.dart';
 import 'package:tdvp/models/users_model.dart';
 import 'package:tdvp/utility/dailog.dart';
@@ -257,11 +258,35 @@ class _CreateNewsPagesState extends State<CreateNewsPages> {
 
     Map<String, dynamic> map = model.toMap();
 
-    await FirebaseFirestore.instance
+    //await
+    FirebaseFirestore.instance
         .collection('news')
         .doc()
         .set(map)
-        .then((value) => Navigator.pop(context));
+        //.then((value) => Navigator.pop(context));
+        //.then((value) => normalDialogOn(context, 'เพิ่มข่าวสารใหม่สำเร็จคะ'));
+        .then((value) async {
+      StyleDialog(context: context).actionDialog(
+          title: 'ข่าวสารใหม่',
+          message: 'เพิ่มข่าวสารใหม่สำเร็จคะ',
+          label1: 'ตกลง',
+          label2: 'ออก',
+          presFunc1: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CustomerService(),
+              ),
+            );
+          },
+          presFunc2: () {
+            Navigator.pop(context);
+            MaterialPageRoute(
+              builder: (context) => const CustomerService(),
+            );
+          });
+    });
   }
 
   Container blockSaveNews() => Container(

@@ -98,7 +98,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("news")
-                      .orderBy('newstimes', descending: true)
+                      .orderBy('newstimes', descending: false)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
