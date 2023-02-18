@@ -36,10 +36,10 @@ class _ListsNewsPagesState extends State<ListsNewsPages> {
       newsModels.clear();
       docIdNews.clear();
     }
-    //await
+
     FirebaseFirestore.instance
         .collection('news')
-        .orderBy('newstimes', descending: false)
+        .orderBy('newstimes', descending: true)
         .get()
         .then((value) {
       print('value ==> ${value.docs}');
